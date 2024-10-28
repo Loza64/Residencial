@@ -13,7 +13,7 @@
     <header>
         <h2 class="logo">RSR</h2>
         <nav class="navigation">
-            <a href="#" onclick = "window.location.href='../Inicio/inicio.html'">Inicio</a>
+            <a href="#" onclick = "window.location.href='inicio.php'">Inicio</a>
             <a href="#">Calendario</a>
             <a href="#">Contacto</a>
             <button class="btnLogin-pop">Login</button>
