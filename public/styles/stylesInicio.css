@@ -89,7 +89,7 @@ nav{
 }
 
 header {
-  background-image: url(BG_Inicio.jpg);
+  background-image: url(../resources/BG_Inicio.jpg);
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
