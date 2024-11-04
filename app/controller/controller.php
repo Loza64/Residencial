@@ -35,7 +35,7 @@ class controller {
     }  
 
     function signUp($username, $email, $pass) {  
-        try {  
+        try { 
             $response = $this->userdao->create($username, $email, $pass);  
             if ($response) {  
                 http_response_code(201);  

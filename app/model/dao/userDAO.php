@@ -23,7 +23,7 @@ class userDAO extends database {
                 $stmt = $con->prepare("INSERT INTO users (username, email, pass) VALUES (:username, :email, :pass)");
                 $stmt->bindParam(':username', $username);
                 $stmt->bindParam(':email', $email);
-                $stmt->bindParam(':pass', password_hash($password, PASSWORD_DEFAULT));
+                $stmt->bindParam(':pass', $password);
                 $stmt->execute();
                 return true;
             } else {

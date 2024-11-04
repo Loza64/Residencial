@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_GET["action"])) {
                 echo json_encode(["state" => false, "message" => "Missing user, email, or password."]);  
                 break;  
             }  
-            echo $controller->signUp($data["user"], $data["email"], $data["pass"]);  
+            echo $controller->signUp($data["user"], $data["email"], password_hash($data["pass"], PASSWORD_DEFAULT));  
             break;  
 
         default:  
@@ -65,6 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_GET["action"])) {
 if($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET["action"])) {  
     switch ($_GET["action"]) {  
         case 'logout':  
+            session_start();
             session_destroy();
             http_response_code(200);  
             echo json_encode(["state" => true, "message" => "session closed"]);  
