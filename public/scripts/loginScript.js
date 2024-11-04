@@ -27,7 +27,7 @@ login.addEventListener('submit', async (e) => {
 
     const form = new FormData(e.target);
     
-    const response = await fetch('http://localhost/residencial/requests.php', {
+    const response = await fetch('http://localhost/residencial/?action=login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
