@@ -9,10 +9,10 @@ class database {
     private $pass;
 
     public function __construct() {
-        $this->host = getenv("HOST");
-        $this->database = getenv("DATABASE");
-        $this->user = getenv("USER");
-        $this->pass = getenv("PASS");
+        $this->host = $_ENV["HOST"];
+        $this->database = $_ENV["DATABASE"];
+        $this->user = $_ENV["USER"];
+        $this->pass = $_ENV["PASS"];
     }
 
     public function getConnection() {
