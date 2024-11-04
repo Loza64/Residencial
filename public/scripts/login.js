@@ -27,12 +27,13 @@ login.addEventListener('submit', async (e) => {
 
     const form = new FormData(e.target);
     
-    const response = await fetch('http://localhost/residencial/requests.php?action=login', {
+    const response = await fetch('http://localhost/residencial/requests.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
+            action: 'login',
             email: form.get("email"), 
             pass: form.get("password")
         })
