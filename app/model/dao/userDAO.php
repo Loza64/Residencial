@@ -40,15 +40,15 @@ class userDAO extends database {
     }
 
     public function findByEmail($email) {
-        try {
-            $con = $this->getConnection();
-            $stmt = $con->prepare("SELECT * FROM users WHERE email = :email");
-            $stmt->bindParam(':email', $email);
-            $stmt->execute();
-            return $stmt->fetch(PDO::FETCH_ASSOC);
-        } catch (\PDOException $ex) {
+        try {  
+            $con = $this->getConnection();  
+            $stmt = $con->prepare("SELECT * FROM users WHERE email = :email");  
+            $stmt->bindParam(':email', $email);  
+            $stmt->execute();  
+            return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;  
+        } catch (\PDOException $ex) {  
             throw $ex;
-        }
+        } 
     }
 }
 ?>

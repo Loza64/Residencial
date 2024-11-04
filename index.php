@@ -1,12 +1,15 @@
 <?php  
-
-// Muestra errores en modo desarrollo  
-//ini_set('display_errors', 1);  
-//ini_set('display_startup_errors', 1);  
-//error_reporting(E_ALL);  
-
 require_once 'app/controller/controller.php';  
 require_once 'app/model/entities/user.php';  
+require_once 'app/config/settings.php';
+
+settings::load();
+
+if($_ENV["MODE"] == "DEVELOPMENT"){
+    ini_set('display_errors', 1);  
+    ini_set('display_startup_errors', 1);  
+    error_reporting(E_ALL);  
+}
 
 session_start();  
 if (isset($_SESSION['user'])) {  
@@ -59,9 +62,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_GET["action"])) {
 
 if($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET["action"])) {  
     switch ($_GET["action"]) {  
-        case 'hola':  
+        case 'logout':  
+            session_destroy();
             http_response_code(200);  
-            echo json_encode(["state" => true, "message" => "Hola"]);  
+            echo json_encode(["state" => true, "message" => "session closed"]);  
             break;  
 
         default:  

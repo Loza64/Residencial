@@ -13,20 +13,20 @@ class controller {
     function login($email, $pass) {  
         try {  
             $response = $this->userdao->findByEmail($email);  
-            if ($response && password_verify($pass, $response["pass"])) {  
+            if ($response != null && password_verify($pass, $response["pass"])) {  
                 session_start();  
                 $_SESSION["user"] = [  
                     "id" => $response["id"],  
                     "username" => $response["username"],  
                     "email" => $response["email"],  
                     "rol" => $response["rol"]  
-                ];  
+                ]; 
                 http_response_code(200);  
-                echo json_encode(["state" => true, "message" => "Login successful."]);  
+                echo json_encode(["state" => true, "message" => "login succes."]);  
             } else {  
                 http_response_code(401);  
-                echo json_encode(["state" => false, "message" => "Email or password incorrect."]);  
-            }  
+                echo json_encode(["state" => false, "message" => "email incorrect."]);  
+            } 
         } catch (\Throwable $th) {  
             http_response_code(500);  
             echo json_encode(["state" => false, "message" => "Internal server error."]);  
@@ -36,7 +36,6 @@ class controller {
 
     function signUp($username, $email, $pass) {  
         try {  
-            // Revisar si el email o username ya existen antes de crear el usuario  
             $existingUser = $this->userdao->findByEmail($email);  
             if ($existingUser) {  
                 http_response_code(409);  
