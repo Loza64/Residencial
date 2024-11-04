@@ -25,6 +25,4 @@ class database {
             throw $ex;
         }
     }
-    
 }
-?>
