@@ -36,21 +36,13 @@ class controller {
 
     function signUp($username, $email, $pass) {  
         try {  
-            $existingUser = $this->userdao->findByEmail($email);  
-            if ($existingUser) {  
-                http_response_code(409);  
-                echo json_encode(["state" => false, "message" => "Email already exists."]);  
-                return; 
-            }  
-
-            $hashedPassword = password_hash($pass, PASSWORD_DEFAULT);  
-            $response = $this->userdao->create($username, $email, $hashedPassword);  
+            $response = $this->userdao->create($username, $email, $pass);  
             if ($response) {  
-                http_response_code(201); // 201 Created  
+                http_response_code(201);  
                 echo json_encode(["state" => true, "message" => "Signup successful."]);  
             } else {  
-                http_response_code(500);  
-                echo json_encode(["state" => false, "message" => "Failed to create user."]);  
+                http_response_code(409);  
+                echo json_encode(["state" => false, "message" => "Username or email is already used."]);  
             }  
         } catch (\Throwable $th) {  
             http_response_code(500);  

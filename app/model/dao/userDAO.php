@@ -2,13 +2,8 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . '/residencial/app/connection/database.php';
 
 class userDAO extends database {
-    private $db;
 
-    function __construct() {
-        $this->db = new database();
-    }
-
-    public function checkuser($username, $email){
+    private function checkuser($username, $email){
         try {
             $con = $this->getConnection();
             $stmt = $con->prepare("SELECT * FROM users WHERE username = :username OR email = :email");
