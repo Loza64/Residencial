@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/stylesLogin.css">
+    <link rel="stylesheet" href="styles/login.css">
     <title>Residencial</title>
 </head>
 
@@ -27,26 +27,25 @@
 
         <div class="form-box login">
             <h2>Login</h2>
-            <form action="#">
+            <form id="login">
                 <div class="input-box">
                     <span class="icon">
                         <ion-icon name="mail"></ion-icon>
                     </span>
-                    <input type="email" required>
+                    <input type="email" required name="email">
                     <label>Correo</label>
                 </div>
                 <div class="input-box">
                     <span class="icon">
                         <ion-icon name="lock-closed"></ion-icon>
                     </span>
-                    <input type="password" required>
+                    <input type="password" required name="password">
                     <label>Contraseña</label>
                 </div>
                 <div class="remember">
-                    <label><input type="checkbox">
-                        Remember me</label>
+                    <label><input type="checkbox" name="check">Remember me</label>
                 </div>
-                <button type="submit" class="btn" onclick="window.location.href='../Inicio/inicio.html'">
+                <button type="submit" class="btn">
                     Login
                 </button>
                 <div class="login-register">
@@ -57,26 +56,26 @@
 
         <div class="form-box register">
             <h2>Registrate</h2>
-            <form action="#">
+            <form id="signup">
                 <div class="input-box">
                     <span class="icon">
                         <ion-icon name="person"></ion-icon>
                     </span>
-                    <input type="text" required>
+                    <input type="text" required name="username">
                     <label>Usuario</label>
                 </div>
                 <div class="input-box">
                     <span class="icon">
                         <ion-icon name="mail"></ion-icon>
                     </span>
-                    <input type="email" required>
+                    <input type="email" required name="mail">
                     <label>Correo</label>
                 </div>
                 <div class="input-box">
                     <span class="icon">
                         <ion-icon name="lock-closed"></ion-icon>
                     </span>
-                    <input type="password" required>
+                    <input type="password" required name="password">
                     <label>Contraseña</label>
                 </div>
                 <div class="remember">
@@ -95,7 +94,7 @@
     </div>
 
 
-    <script src="scripts/scripLogin.js"></script>
+    <script src="scripts/login.js"></script>
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
