@@ -8,12 +8,11 @@
     <title>Residencial</title>
   </head>
   <body>
-    <nav>
-      <div class="logo">RSR</div>
+  <nav>
+      <div class="logo">Residencial San Francisco</div>
       <ul class="navigation">
         <a href="#" class="LP">Inicio</a>
-            <a href="#">Calendario</a>
-            <a href="#">Contacto</a>
+            <a href="#" onclick = "window.location.href='../Contact/contact.html'">Contacto</a>
       </ul>
     </nav>
     <header>
@@ -22,79 +21,64 @@
           <h1>
             Vive la tranquilidad<br />que <span>siempre<br />soñaste.</span>
           </h1>
-          <a href="#" class="contact-us">Contáctanos</a>
+          <a href="#" class="contact-us" onclick = "window.location.href='../Contact/contact.html'">Contáctanos</a>
         </div>
         <div class="footer__cards">
           <div class="card">
-            <h4>01</h4>
-            <h5>Título 1</h5>
+            <h4>Seguridad 24/7</h4>
+            <h5>Protección total para tu tranquilidad</h5>
             <p>
-              Lorem ipsum dolor sit amet consectetur 
-              adipisicing elit. 
-              Dicta laudantium maiores quia, 
-              tenetur sit doloribus at dolor quis quo cumque. 
-              Omnis repellat libero quos similique officia amet 
-              quisquam quidem odio!
+              La Residencial San Francisco cuenta 
+              con seguridad privada, 
+              sistema de cámaras de vigilancia 
+              y acceso controlado las 24 horas 
+              del día para mantener un entorno seguro.
             </p>
           </div>
           <div class="card">
-            <h4>02</h4>
-            <h5>Título 2</h5>
+            <h4>Áreas Verdes y Recreación</h4>
+            <h5>Espacios para el disfrute familiar</h5>
             <p>
-              Lorem ipsum dolor sit amet consectetur 
-              adipisicing elit. 
-              Dicta laudantium maiores quia, 
-              tenetur sit doloribus at dolor quis quo cumque. 
-              Omnis repellat libero quos similique officia amet 
-              quisquam quidem odio!
+              Disfruta de amplias áreas verdes, 
+              zonas de juegos para niños, y áreas 
+              de esparcimiento para compartir en familia.
             </p>
           </div>
           <div class="card">
-            <h4>03</h4>
-            <h5>Título 3</h5>
+            <h4>Ubicación Privilegiada</h4>
+            <h5>Cercanía y conveniencia</h5>
             <p>
-              Lorem ipsum dolor sit amet consectetur 
-              adipisicing elit. 
-              Dicta laudantium maiores quia, 
-              tenetur sit doloribus at dolor quis quo cumque. 
-              Omnis repellat libero quos similique officia amet 
-              quisquam quidem odio!
+              Situada en una zona estratégica, 
+              la residencial ofrece fácil acceso 
+              a centros comerciales, colegios y 
+              servicios de salud.
             </p>
           </div>
           <div class="card">
-            <h4>04</h4>
-            <h5>Título 4</h5>
+            <h4>Infraestructura Moderna</h4>
+            <h5>Calidad y confort en cada detalle</h5>
             <p>
-              Lorem ipsum dolor sit amet consectetur 
-              adipisicing elit. 
-              Dicta laudantium maiores quia, 
-              tenetur sit doloribus at dolor quis quo cumque. 
-              Omnis repellat libero quos similique officia amet 
-              quisquam quidem odio!
+              Las viviendas están diseñadas con altos 
+              estándares de construcción, brindando espacios 
+              cómodos, modernos y con acabados de calidad.
             </p>
           </div>
           <div class="card">
-            <h4>05</h4>
-            <h5>Título 5</h5>
+            <h4>Club Social</h4>
+            <h5>Un espacio exclusivo para eventos</h5>
             <p>
-              Lorem ipsum dolor sit amet consectetur 
-              adipisicing elit. 
-              Dicta laudantium maiores quia, 
-              tenetur sit doloribus at dolor quis quo cumque. 
-              Omnis repellat libero quos similique officia amet 
-              quisquam quidem odio!
+              La residencial cuenta con un club social, 
+              ideal para eventos privados, reuniones 
+              y celebraciones en un ambiente seguro.
             </p>
           </div>
           <div class="card">
-            <h4>06</h4>
-            <h5>Título 6</h5>
+            <h4>Áreas Deportivas</h4>
+            <h5>Promoviendo un estilo de vida saludable</h5>
             <p>
-              Lorem ipsum dolor sit amet consectetur 
-              adipisicing elit. 
-              Dicta laudantium maiores quia, 
-              tenetur sit doloribus at dolor quis quo cumque. 
-              Omnis repellat libero quos similique officia amet 
-              quisquam quidem odio!
+              Espacios dedicados para practicar deportes 
+              como fútbol, tenis y basquetbol, equipados 
+              con instalaciones de alta calidad.
             </p>
           </div>
         </div>
