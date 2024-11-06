@@ -33,7 +33,6 @@ login.addEventListener('submit', async (e) => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            action: 'login',
             email: form.get("email"), 
             pass: form.get("password")
         })
