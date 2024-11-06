@@ -24,22 +24,22 @@
 
         <div class="form-box login">
             <h2>Login</h2>
-            <form action="#">
+            <form id="login">
                 <div class="input-box">
                     <span class="icon"><ion-icon name="mail"></ion-icon></span>
-                    <input type="email" required>
+                    <input type="email" required  name="email">
                     <label>Correo</label>
                 </div>
                 <div class="input-box">
                     <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
-                    <input type="password" required>
+                    <input type="password" required name="pass">
                     <label>Contraseña</label>
                 </div>
                 <div class="remember">
                     <label><input type="checkbox">
                         Remember me</label>
                 </div>
-                <button type="submit" class="btn" onclick = "window.location.href='../Inicio/inicio.html'">
+                <button type="submit" class="btn">
                     Login
                 </button>
                 <div class="login-register">
@@ -70,7 +70,7 @@
                     <label><input type="checkbox" required>
                         Aceptar Terminos y Condiciones</label>
                 </div>
-                <button type="submit" class="btn" onclick = "window.location.href='../Inicio/inicio.html'">
+                <button type="submit" class="btn">
                     Registrar
                 </button>
                 <div class="login-register">
@@ -82,7 +82,7 @@
     </div>
 
 
-    <script src="scripLogin.js"></script>
+    <script src="scripts/login.js"></script>
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
