@@ -12,7 +12,7 @@
       <div class="logo">Residencial San Francisco</div>
       <ul class="navigation">
         <a href="#" class="LP">Inicio</a>
-            <a href="#" onclick = "window.location.href='../Contact/contact.html'">Contacto</a>
+            <a href="#" onclick = "window.location.href='contact.php'">Contacto</a>
       </ul>
     </nav>
     <header>
@@ -21,7 +21,7 @@
           <h1>
             Vive la tranquilidad<br />que <span>siempre<br />soñaste.</span>
           </h1>
-          <a href="#" class="contact-us" onclick = "window.location.href='../Contact/contact.html'">Contáctanos</a>
+          <a href="#" class="contact-us" onclick = "window.location.href='contact.php'">Contáctanos</a>
         </div>
         <div class="footer__cards">
           <div class="card">
