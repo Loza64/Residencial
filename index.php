@@ -11,7 +11,7 @@ if($_ENV["MODE"] == "DEVELOPMENT"){
     error_reporting(E_ALL);  
 }
 
-/* 
+
 session_start();  
 if (isset($_SESSION['user'])) {  
     header('Location: app/view/dashboard.php');   
@@ -19,7 +19,7 @@ if (isset($_SESSION['user'])) {
 }else{
     header('Location: public/login.php'); 
 }
-*/  
+
 
 header("Access-Control-Allow-Origin: *");  
 header("Content-Type: application/json");  
