@@ -11,39 +11,33 @@
 
 <body>
     <header>
-        <h2 class="logo">RSR</h2>
+        <h2 class="logo">Residencial San Francisco</h2>
         <nav class="navigation">
-            <a href="#" onclick="window.location.href='inicio.php'">Inicio</a>
-            <a href="#">Calendario</a>
-            <a href="#">Contacto</a>
+            <a href="#" onclick = "window.location.href='../Inicio/inicio.html'">Inicio</a>
+            <a href="#" onclick = "window.location.href='../Contact/contact.html'">Contacto</a>
             <button class="btnLogin-pop">Login</button>
         </nav>
     </header>
 
     <div class="wrapper">
-        <span class="icon-close">
-            <ion-icon name="close"></ion-icon>
-        </span>
+        <span class="icon-close"><ion-icon name="close"></ion-icon></span>
 
         <div class="form-box login">
             <h2>Login</h2>
             <form id="login">
                 <div class="input-box">
-                    <span class="icon">
-                        <ion-icon name="mail"></ion-icon>
-                    </span>
-                    <input type="email" required name="email">
+                    <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                    <input type="email" required  name="email">
                     <label>Correo</label>
                 </div>
                 <div class="input-box">
-                    <span class="icon">
-                        <ion-icon name="lock-closed"></ion-icon>
-                    </span>
-                    <input type="password" required name="password">
+                    <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                    <input type="password" required name="pass">
                     <label>Contraseña</label>
                 </div>
                 <div class="remember">
-                    <label><input type="checkbox" name="check">Remember me</label>
+                    <label><input type="checkbox">
+                        Remember me</label>
                 </div>
                 <button type="submit" class="btn">
                     Login
@@ -56,33 +50,27 @@
 
         <div class="form-box register">
             <h2>Registrate</h2>
-            <form id="signup">
+            <form action="#">
                 <div class="input-box">
-                    <span class="icon">
-                        <ion-icon name="person"></ion-icon>
-                    </span>
-                    <input type="text" required name="username">
+                    <span class="icon"><ion-icon name="person"></ion-icon></span>
+                    <input type="text" required>
                     <label>Usuario</label>
                 </div>
                 <div class="input-box">
-                    <span class="icon">
-                        <ion-icon name="mail"></ion-icon>
-                    </span>
-                    <input type="email" required name="mail">
+                    <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                    <input type="email" required>
                     <label>Correo</label>
                 </div>
                 <div class="input-box">
-                    <span class="icon">
-                        <ion-icon name="lock-closed"></ion-icon>
-                    </span>
-                    <input type="password" required name="password">
+                    <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                    <input type="password" required>
                     <label>Contraseña</label>
                 </div>
                 <div class="remember">
                     <label><input type="checkbox" required>
                         Aceptar Terminos y Condiciones</label>
                 </div>
-                <button type="submit" class="btn" onclick="window.location.href='../Inicio/inicio.html'">
+                <button type="submit" class="btn">
                     Registrar
                 </button>
                 <div class="login-register">
@@ -94,10 +82,11 @@
     </div>
 
 
-    <script src="scripts/loginScript.js"></script>
+    <script src="scripts/login.js"></script>
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
 </body>
 
 </html>

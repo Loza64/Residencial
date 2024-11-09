@@ -33,9 +33,8 @@ login.addEventListener('submit', async (e) => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            action: 'login',
             email: form.get("email"), 
-            pass: form.get("password")
+            pass: form.get("pass")
         })
     });
 
@@ -43,13 +42,12 @@ login.addEventListener('submit', async (e) => {
     if (response.ok) {
         const result = await response.json();
         
-        if (result.state) {
-            alert(result.message); // Mensaje de éxito
-            // Redirigir a otra página si es necesario
-            window.location.href = 'http://localhost/residencial/app/view/dashboard.php'; // Cambia a la página que desees
-        } else {
-            alert("error xD"); // Mensaje de error
+        if (!result.state) {
+            alert(result.message);
+            return;
         }
+        
+        window.location.href = '../app/view/dashboard.php';
     } else {
         alert("Error en la solicitud. Por favor, intenta de nuevo."); // Mensaje de error si la respuesta no es ok
     }

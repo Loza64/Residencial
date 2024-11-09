@@ -1,6 +1,6 @@
 <?php  
 require_once 'app/controller/controller.php';  
-require_once 'app/model/entities/user.php';  
+require_once 'app/model/user.php';  
 require_once 'app/config/settings.php';
 
 settings::load();
@@ -11,7 +11,7 @@ if($_ENV["MODE"] == "DEVELOPMENT"){
     error_reporting(E_ALL);  
 }
 
-/* 
+/*
 session_start();  
 if (isset($_SESSION['user'])) {  
     header('Location: app/view/dashboard.php');   
@@ -19,9 +19,9 @@ if (isset($_SESSION['user'])) {
 }else{
     header('Location: public/login.php'); 
 }
-*/  
+*/
 
-header("Access-Control-Allow-Origin: *");  
+//header("Access-Control-Allow-Origin: *");  
 header("Content-Type: application/json");  
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");  
 
@@ -52,7 +52,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_GET["action"])) {
                 echo json_encode(["state" => false, "message" => "Missing user, email, or password."]);  
                 break;  
             }  
-            echo $controller->signUp($data["user"], $data["email"], password_hash($data["pass"], PASSWORD_DEFAULT));  
+
+            $user = new user(null, $data["user"], $data["email"], password_hash($data["pass"], PASSWORD_DEFAULT), null);
+            echo $controller->signUp($user);  
             break;  
 
         default:  

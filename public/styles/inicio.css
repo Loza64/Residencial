@@ -227,5 +227,6 @@ header {
 
   .card:hover {
     height: 250px;
+    width: 320px;
   }
 }
