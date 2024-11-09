@@ -1,43 +1,51 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/residencial/app/connection/database.php';
 
-class user extends database{
-    private $id;  
-    private $username;  
-    private $email;  
-    private $password; 
-    private $rol; 
+class user extends database
+{
+    private $id;
+    private $username;
+    private $email;
+    private $password;
+    private $rol;
 
-    public function __construct($id = null, $username = null, $email = null, $password = null, $rol = null) {  
-        $this->id = $id;  
-        $this->username = $username;  
-        $this->email = $email;  
-        $this->password = $password;  
-        $this->rol = $rol;  
-    } 
-  
+    public function __construct($id = null, $username = null, $email = null, $password = null, $rol = null)
+    {
+        $this->id = $id;
+        $this->username = $username;
+        $this->email = $email;
+        $this->password = $password;
+        $this->rol = $rol;
+    }
+
     // Getters
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
-    public function getUsername() {
+    public function getUsername()
+    {
         return $this->username;
     }
 
-    public function getEmail() {
+    public function getEmail()
+    {
         return $this->email;
     }
 
-    public function getPassword() {
+    public function getPassword()
+    {
         return $this->password;
     }
 
-    public function getRol() {
+    public function getRol()
+    {
         return $this->rol;
     }
 
-    private function checkuser($username, $email){
+    private function checkuser($username, $email)
+    {
         try {
             $con = $this->getConnection();
             $stmt = $con->prepare("SELECT * FROM users WHERE username = :username OR email = :email");
@@ -50,7 +58,8 @@ class user extends database{
         }
     }
 
-    public function create(user $user): bool {
+    public function create(user $user): bool
+    {
         try {
             if (!$this->checkuser($user->getUsername(), $user->getEmail())) {
                 $con = $this->getConnection();
@@ -68,24 +77,24 @@ class user extends database{
         }
     }
 
-    public function findByEmail($email) :? user{
-        try {  
-            $con = $this->getConnection();  
-            $stmt = $con->prepare("SELECT * FROM users WHERE email = :email");  
-            $stmt->bindParam(':email', $email);  
-            $stmt->execute();  
-            $responce = $stmt->fetch(PDO::FETCH_ASSOC);  
-            return $responce ? 
-            new user(
-                $responce["id"], 
-                $responce["username"], 
-                $responce["email"], 
-                $responce["pass"], 
-                $responce["rol"]
-            ) : null;
-        } catch (\PDOException $ex) {  
+    public function findByEmail($email): ?user
+    {
+        try {
+            $con = $this->getConnection();
+            $stmt = $con->prepare("SELECT * FROM users WHERE email = :email");
+            $stmt->bindParam(':email', $email);
+            $stmt->execute();
+            $responce = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $responce ?
+                new user(
+                    $responce["id"],
+                    $responce["username"],
+                    $responce["email"],
+                    $responce["pass"],
+                    $responce["rol"]
+                ) : null;
+        } catch (\PDOException $ex) {
             throw $ex;
-        } 
+        }
     }
 }
-?>

@@ -1,0 +1,37 @@
+<?php
+
+//Post
+
+function authenticateUser($post, $controller)
+{
+    if (empty($post["email"]) || empty($post["pass"])) {
+        respondWithError(400, "Missing email or password.");
+    }
+    echo $controller->login($post["email"], $post["pass"]);
+}
+
+function registerUser($post, $controller)
+{
+    if (empty($post["user"]) || empty($post["email"]) || empty($post["pass"])) {
+        respondWithError(400, "Missing user, email, or password.");
+    }
+    $user = new user(0, $post["user"], $post["email"], password_hash($post["pass"], PASSWORD_DEFAULT), "");
+    echo $controller->signUp($user);
+}
+
+
+//Get
+function logout()
+{
+    session_start();
+    session_destroy();
+    http_response_code(200);
+    echo json_encode(["state" => true, "message" => "Session closed"]);
+}
+
+//Error
+function respondWithError($code, $message) {  
+    http_response_code($code);  
+    echo json_encode(["state" => false, "message" => $message]);  
+    exit();  
+}
