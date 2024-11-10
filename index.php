@@ -11,6 +11,11 @@ if ($config->getMode() == "DEVELOPMENT") {
     error_reporting(E_ALL);  
 }  
 
+if ($_SERVER['REQUEST_URI'] == '/residencial/') {  
+    header("Location: /residencial/public/login.php");  
+    exit();  
+}  
+
 header("Access-Control-Allow-Origin: *");  
 header("Content-Type: application/json");  
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");  
