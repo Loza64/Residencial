@@ -1,5 +1,5 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/residencial/app/connection/database.php';
+require_once './app/connection/database.php';
 
 class user extends database
 {

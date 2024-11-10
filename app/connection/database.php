@@ -1,5 +1,5 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/residencial/app/config/settings.php';
+require_once './app/config/settings.php';
 
 class database
 {

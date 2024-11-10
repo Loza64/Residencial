@@ -34,7 +34,7 @@ switch ($_SERVER["REQUEST_METHOD"]) {
         break;  
 
     default:  
-        respondWithError(405, "Method Not Allowed");  
+        errorResponse(405, "Method Not Allowed");  
         break;  
 }  
 
@@ -49,7 +49,7 @@ function handlePostRequest($action, $post, $controller) {
             break;  
 
         default:  
-            respondWithError(404, "Action not found");  
+            errorResponse(404, "Action not found");  
             break;  
     }  
 }  
@@ -58,6 +58,6 @@ function handleGetRequest($action) {
     if ($action === "logout") {  
         logout();
     } else {  
-        respondWithError(404, "Action not found");  
+        errorResponse(404, "Action not found");  
     }  
 }  

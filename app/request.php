@@ -1,22 +1,30 @@
 <?php
+require_once './app/middleware/validator.php';
 
 //Post
-
 function authenticateUser($post, $controller)
 {
+    $errors = validateLogin($post);
     if (empty($post["email"]) || empty($post["pass"])) {
-        respondWithError(400, "Missing email or password.");
+        errorResponse(400, "Missing email or password.");
+    } else if (!empty($errors)) {
+        errorResponse(400, $errors);
+    } else {
+        echo $controller->login($post["email"], $post["pass"]);
     }
-    echo $controller->login($post["email"], $post["pass"]);
 }
 
 function registerUser($post, $controller)
 {
+    $errors = validateSignUp($post);
     if (empty($post["user"]) || empty($post["email"]) || empty($post["pass"])) {
-        respondWithError(400, "Missing user, email, or password.");
+        errorResponse(400, "Missing user, email, or password.");
+    } else if (!empty($errors)) {
+        errorResponse(400, $errors);
+    } else {
+        $user = new user(0, $post["user"], $post["email"], password_hash($post["pass"], PASSWORD_DEFAULT), "");
+        echo $controller->signUp($user);
     }
-    $user = new user(0, $post["user"], $post["email"], password_hash($post["pass"], PASSWORD_DEFAULT), "");
-    echo $controller->signUp($user);
 }
 
 
@@ -30,8 +38,9 @@ function logout()
 }
 
 //Error
-function respondWithError($code, $message) {  
-    http_response_code($code);  
-    echo json_encode(["state" => false, "message" => $message]);  
-    exit();  
+function errorResponse($code, $message)
+{
+    http_response_code($code);
+    echo json_encode(["state" => false, "message" => $message]);
+    exit();
 }
