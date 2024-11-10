@@ -1,5 +1,5 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/residencial/app/model/user.php';
+require_once './app/model/user.php';
 
 class controller
 {
