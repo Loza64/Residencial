@@ -12,7 +12,7 @@ class settings
 
     public function __construct()
     {  
-        Dotenv::createImmutable($_SERVER['DOCUMENT_ROOT'] . '/residencial')->load();
+        Dotenv::createImmutable('./')->load();
         $this->dsn = $_ENV["DSN"] ?? null; 
         $this->user = $_ENV["USER"] ?? null;  
         $this->pass = $_ENV["PASS"] ?? null;  
