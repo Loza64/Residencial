@@ -2,7 +2,7 @@
 
 require_once './app/connection/database.php';  
 
-class Contact extends database {  
+class Contact extends Database {  
     private ?int $id;  
     private ?int $id_user;  
     private ?string $name;  
