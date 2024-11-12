@@ -15,7 +15,7 @@ class controller
     {
         try {
             $response = $this->userDao->findByEmail($email);
-            if ($response != null && password_verify($pass, $response->getPassword())) {
+            if ($response != null && password_verify($pass, $response->getPass())) {
                 session_start();
                 $_SESSION["user"] = [
                     "id" => $response->getId(),
@@ -31,8 +31,8 @@ class controller
             }
         } catch (\Throwable $th) {
             http_response_code(500);
-            echo json_encode(["state" => false, "message" => "Internal server error."]);
-            error_log($th->getMessage()); // Log the error for debugging  
+            echo json_encode(["state" => false, "message" => $th]);
+            error_log($th->getMessage());
         }
     }
 
@@ -49,8 +49,8 @@ class controller
             }
         } catch (\Throwable $th) {
             http_response_code(500);
-            echo json_encode(["state" => false, "message" => "Internal server error."]);
-            error_log($th->getMessage()); // Log the error for debugging  
+            echo json_encode(["state" => false, "message" => $th]);
+            error_log($th->getMessage());
         }
     }
 }

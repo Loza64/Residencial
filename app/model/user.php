@@ -6,15 +6,15 @@ class user extends database
     private $id;
     private $username;
     private $email;
-    private $password;
+    private $pass;
     private $rol;
 
-    public function __construct($id = null, $username = null, $email = null, $password = null, $rol = null)
+    public function __construct($id = null, $username = null, $email = null, $pass = null, $rol = null)
     {
         $this->id = $id;
         $this->username = $username;
         $this->email = $email;
-        $this->password = $password;
+        $this->pass = $pass;
         $this->rol = $rol;
     }
 
@@ -34,15 +34,15 @@ class user extends database
         return $this->email;
     }
 
-    public function getPassword()
+    public function getPass()
     {
-        return $this->password;
+        return $this->pass;
     }
 
     public function getRol()
     {
         return $this->rol;
-    }
+    } 
 
     private function checkuser($username, $email)
     {
@@ -67,11 +67,11 @@ class user extends database
 
                 $username = $user->getUsername();
                 $email = $user->getEmail();
-                $password  = $user->getPassword();
+                $pass  = $user->getPass();
 
                 $stmt->bindParam(':username', $username);
                 $stmt->bindParam(':email', $email);
-                $stmt->bindParam(':pass', $password);
+                $stmt->bindParam(':pass', $pass);
                 $stmt->execute();
                 return true;
             } else {
