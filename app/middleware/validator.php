@@ -106,8 +106,8 @@ function validateContact($post)
         $errors["application_date"] = "Please enter a valid application date in the format 'Y-m-d'.";
     } else {
         $applicationDate = DateTime::createFromFormat('Y-m-d', $post["application_date"]);
-        $now =   new DateTime();
-        $now->setTime(0, 0, 0); 
+        $now = new DateTime();
+        $now->setTime(0, 0, 0);
         if ($applicationDate < $now) {
             $errors["application_date"] = "The application date must be today or in the future.";
         }
