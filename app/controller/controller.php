@@ -1,14 +1,17 @@
 <?php
 require_once './app/model/user.php';
+require_once './app/model/contact.php';
 
 class Controller
 {
 
     private $userDao;
+    private $contactDao;
 
     function __construct()
     {
         $this->userDao = new User();
+        $this->contactDao = new Contact();
     }
 
     function signUp(User $user)
@@ -23,7 +26,7 @@ class Controller
                 echo json_encode(["state" => false, "message" => "Username or email is already used."]);
             }
         } catch (\Throwable $th) {
-            http_response_code(505);
+            http_response_code(500);
             echo json_encode(["state" => false, "message" => $th->getMessage()]);
             error_log($th->getMessage());
         }
@@ -54,4 +57,21 @@ class Controller
         }
     }
 
+    function newContact(Contact $contact)
+    {
+        try {
+            $response = $this->contactDao->create($contact);
+            if ($response) {
+                http_response_code(201);
+                echo json_encode(["state" => true, "message" => "Form contact save success."]);
+            } else {
+                http_response_code(409);
+                echo json_encode(["state" => false, "message" => "Your already send form contact"]);
+            }
+        } catch (\Throwable $th) {
+            http_response_code(500);
+            echo json_encode(["state" => false, "message" => $th->getMessage()]);
+            error_log($th->getMessage());
+        }
+    }
 }

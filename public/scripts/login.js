@@ -37,14 +37,14 @@ document.getElementById("login").addEventListener('submit', async (e) => {
     if (response.status === 200) {
         alert(result.message);
         window.location.href = 'http://localhost/residencial/?action=redirect';
-    } else if (response.status === 401) {
-        alert(result.message)
+    } else {
+        alert(JSON.stringify({ code: response.status, ...result }))
     }
 });
 
 document.getElementById("signup").addEventListener("submit", async (e) => {
     e.preventDefault();
-    
+
     const form = new FormData(e.target);
     const response = await fetch('http://localhost/residencial/?action=signup', {
         headers: { 'Content-Type': 'application/json' },
@@ -60,12 +60,8 @@ document.getElementById("signup").addEventListener("submit", async (e) => {
 
     if (response.status === 201) {
         alert(result.message)
-    } else if (response.status === 409) {
-        alert(result.message)
-    }else if(response.status === 400){
-        alert(JSON.stringify(result.message))
-    }else{
-        alert(JSON.stringify(result.message))
+    } else {
+        alert(JSON.stringify({ code: response.status, ...result }))
     }
 
 })
