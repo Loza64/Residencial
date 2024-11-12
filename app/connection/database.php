@@ -3,7 +3,7 @@ require_once './app/config/settings.php';
 
 class Database
 {
-    protected function getConnection()
+    protected function getConnection(): PDO
     {
         $config = new Settings();
         try {

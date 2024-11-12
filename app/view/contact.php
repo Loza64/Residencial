@@ -1,15 +1,9 @@
 <?php
 session_start();
-require_once '../app/connection/database.php';
-require_once '../app/controller/contactController.php';
-
 if (!isset($_SESSION['user'])) {
     header('Location: ../../public/login.php');
     exit();
 }
-
-$user_id = $_SESSION['user']['id'];
-$formSubmitted = ContactController::isFormSubmitted($user_id);
 ?>
 
 
@@ -28,7 +22,7 @@ $formSubmitted = ContactController::isFormSubmitted($user_id);
     <header>
         <h2 class="logo">Residencial San Francisco</h2>
         <nav class="navigation">
-            <a href="#" onclick = "window.location.href='inicio.php'">Inicio</a>
+            <a href="#" onclick="window.location.href='inicio.php'">Inicio</a>
             <a href="#" class="contact">Contacto</a>
             <a href="#" onclick="window.location.href='http://localhost/residencial/?action=logout'">Cerrar Sesión</a>
         </nav>
@@ -93,12 +87,12 @@ $formSubmitted = ContactController::isFormSubmitted($user_id);
                 <div class="remember">
                     <label><input type="checkbox" required> Autorización para Comprobación de Datos</label>
                 </div>
-                <button type="submit" class="btn" <?php if ($formSubmitted) echo 'disabled'; ?>>
+                <button type="submit" class="btn">
                     <?php echo $formSubmitted ? "Usted ya ha mandado su formulario de contacto" : "Enviar"; ?>
                 </button>
             </form>
         </div>
-        
+
 
 
     </div>

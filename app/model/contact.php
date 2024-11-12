@@ -1,202 +1,234 @@
-<?php  
+<?php
+require_once './app/connection/database.php';
 
-require_once './app/connection/database.php';  
+class Contact extends Database
+{
+    private ?int $id;
+    private ?int $id_user;
+    private ?string $name;
+    private ?string $dui;
+    private ?string $email;
+    private ?string $phone;
+    private ?string $address;
+    private ?string $occupation;
+    private ?float $income;
+    private ?int $family_members;
+    private ?string $reason_interest;
+    private ?string $personal_reference;
+    private ?DateTime $birth;
+    private ?DateTime $application_date;
 
-class Contact extends Database {  
-    private ?int $id;  
-    private ?int $id_user;  
-    private ?string $name;  
-    private ?string $birth;  
-    private ?string $dui;  
-    private ?string $email;  
-    private ?string $phone;  
-    private ?string $address;  
-    private ?string $occupation;  
-    private ?float $income;  
-    private ?int $family_members;  
-    private ?string $reason_interest;  
-    private ?string $personal_reference;  
-    private ?string $application_date;  
+    public function __construct(
+        ?int $id = null,
+        ?int $id_user = null,
+        ?string $name = null,
+        ?DateTime $birth = null,
+        ?string $dui = null,
+        ?string $email = null,
+        ?string $phone = null,
+        ?string $address = null,
+        ?string $occupation = null,
+        ?float $income = null,
+        ?int $family_members = null,
+        ?string $reason_interest = null,
+        ?string $personal_reference = null,
+        ?DateTime $application_date = null
+    ) {
+        $this->id = $id;
+        $this->id_user = $id_user;
+        $this->name = $name;
+        $this->birth = $birth;
+        $this->dui = $dui;
+        $this->email = $email;
+        $this->phone = $phone;
+        $this->address = $address;
+        $this->occupation = $occupation;
+        $this->income = $income;
+        $this->family_members = $family_members;
+        $this->reason_interest = $reason_interest;
+        $this->personal_reference = $personal_reference;
+        $this->application_date = $application_date;
+    }
 
-    public function __construct(  
-        ?int $id = null,  
-        ?int $id_user = null,  
-        ?string $name = null,  
-        ?string $birth = null,  
-        ?string $dui = null,  
-        ?string $email = null,  
-        ?string $phone = null,  
-        ?string $address = null,  
-        ?string $occupation = null,  
-        ?float $income = null,  
-        ?int $family_members = null,  
-        ?string $reason_interest = null,  
-        ?string $personal_reference = null,  
-        ?string $application_date = null  
-    ) {  
-        $this->id = $id;  
-        $this->id_user = $id_user;  
-        $this->setName($name);  
-        $this->setBirth($birth);  
-        $this->setDui($dui);  
-        $this->setEmail($email);  
-        $this->setPhone($phone);  
-        $this->setAddress($address);  
-        $this->setOccupation($occupation);  
-        $this->setIncome($income);  
-        $this->setFamilyMembers($family_members);  
-        $this->setReasonInterest($reason_interest);  
-        $this->setPersonalReference($personal_reference);  
-        $this->setApplicationDate($application_date);  
-    }  
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
 
-    // Getters y setters...  
-    
-    public function getId(): ?int {  
-        return $this->id;  
-    }  
+    public function setId(?int $id): void
+    {
+        $this->id = $id;
+    }
 
-    public function setId(?int $id): self {  
-        $this->id = $id;  
-        return $this;  
-    }  
+    public function getIdUser(): ?int
+    {
+        return $this->id_user;
+    }
 
-    public function getIdUser(): ?int {  
-        return $this->id_user;  
-    }  
+    public function setIdUser(?int $id_user): void
+    {
+        $this->id_user = $id_user;
+    }
 
-    public function setIdUser(?int $id_user): self {  
-        $this->id_user = $id_user;  
-        return $this;  
-    }  
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
 
-    public function getName(): ?string {  
-        return $this->name;  
-    }  
+    public function setName(?string $name): void
+    {
+        $this->name = $name;
+    }
 
-    public function setName(?string $name): self {  
-        $this->name = $name;  
-        return $this;  
-    }  
+    public function getDui(): ?string
+    {
+        return $this->dui;
+    }
 
-    public function getBirth(): ?string {  
-        return $this->birth;  
-    }  
+    public function setDui(?string $dui): void
+    {
+        $this->dui = $dui;
+    }
 
-    public function setBirth(?string $birth): self {  
-        $this->birth = $birth;  
-        return $this;  
-    }  
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
 
-    public function getDui(): ?string {  
-        return $this->dui;  
-    }  
+    public function setEmail(?string $email): void
+    {
+        $this->email = $email;
+    }
 
-    public function setDui(?string $dui): self {  
-        $this->dui = $dui;  
-        return $this;  
-    }  
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
 
-    public function getEmail(): ?string {  
-        return $this->email;  
-    }  
+    public function setPhone(?string $phone): void
+    {
+        $this->phone = $phone;
+    }
 
-    public function setEmail(?string $email): self {  
-        if ($email && !filter_var($email, FILTER_VALIDATE_EMAIL)) {  
-            throw new InvalidArgumentException("Email inválido");  
-        }  
-        $this->email = strtolower($email);  
-        return $this;  
-    }  
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
 
-    public function getPhone(): ?string {  
-        return $this->phone;  
-    }  
+    public function setAddress(?string $address): void
+    {
+        $this->address = $address;
+    }
 
-    public function setPhone(?string $phone): self {  
-        $this->phone = $phone;  
-        return $this;  
-    }  
+    public function getOccupation(): ?string
+    {
+        return $this->occupation;
+    }
 
-    public function getAddress(): ?string {  
-        return $this->address;  
-    }  
+    public function setOccupation(?string $occupation): void
+    {
+        $this->occupation = $occupation;
+    }
 
-    public function setAddress(?string $address): self {  
-        $this->address = $address;  
-        return $this;  
-    }  
+    public function getIncome(): ?float
+    {
+        return $this->income;
+    }
 
-    public function getOccupation(): ?string {  
-        return $this->occupation;  
-    }  
+    public function setIncome(?float $income): void
+    {
+        $this->income = $income;
+    }
 
-    public function setOccupation(?string $occupation): self {  
-        $this->occupation = $occupation;  
-        return $this;  
-    }  
+    public function getFamilyMembers(): ?int
+    {
+        return $this->family_members;
+    }
 
-    public function getIncome(): ?float {  
-        return $this->income;  
-    }  
+    public function setFamilyMembers(?int $family_members): void
+    {
+        $this->family_members = $family_members;
+    }
 
-    public function setIncome(?float $income): self {  
-        $this->income = $income;  
-        return $this;  
-    }  
+    public function getReasonInterest(): ?string
+    {
+        return $this->reason_interest;
+    }
 
-    public function getFamilyMembers(): ?int {  
-        return $this->family_members;  
-    }  
+    public function setReasonInterest(?string $reason_interest): void
+    {
+        $this->reason_interest = $reason_interest;
+    }
 
-    public function setFamilyMembers(?int $family_members): self {  
-        $this->family_members = $family_members;  
-        return $this;  
-    }  
+    public function getPersonalReference(): ?string
+    {
+        return $this->personal_reference;
+    }
 
-    public function getReasonInterest(): ?string {  
-        return $this->reason_interest;  
-    }  
+    public function setPersonalReference(?string $personal_reference): void
+    {
+        $this->personal_reference = $personal_reference;
+    }
 
-    public function setReasonInterest(?string $reason_interest): self {  
-        $this->reason_interest = $reason_interest;  
-        return $this;  
-    }  
+    public function getBirth(): ?DateTime
+    {
+        return $this->birth;
+    }
 
-    public function getPersonalReference(): ?string {  
-        return $this->personal_reference;  
-    }  
+    public function setBirth(?DateTime $birth): void
+    {
+        $this->birth = $birth;
+    }
 
-    public function setPersonalReference(?string $personal_reference): self {  
-        $this->personal_reference = $personal_reference;  
-        return $this;  
-    }  
+    public function getApplicationDate(): ?DateTime
+    {
+        return $this->application_date;
+    }
 
-    public function getApplicationDate(): ?string {  
-        return $this->application_date;  
-    }  
+    public function setApplicationDate(?DateTime $application_date): void
+    {
+        $this->application_date = $application_date;
+    }
 
-    public function setApplicationDate(?string $application_date): self {  
-        $this->application_date = $application_date;  
-        return $this;  
-    }  
+    private function isSubmited(int $iduser, PDO $con): bool
+    {
+        try {
+            $stmt = $con->prepare("select * from contact where id_user = :iduser");
+            $stmt->bindParam(":iduser", $iduser);
+            $stmt->execute();
+            return $stmt->fetchColumn() > 0;
+        } catch (\Throwable $th) {
+            error_log("Error checking user existence: " . $th->getMessage());
+        }
+    }
 
-    public function toArray(): array {  
-        return [  
-            'id' => $this->id,  
-            'id_user' => $this->id_user,  
-            'name' => $this->name,  
-            'birth' => $this->birth,  
-            'dui' => $this->dui,  
-            'email' => $this->email,  
-            'phone' => $this->phone,  
-            'address' => $this->address,  
-            'occupation' => $this->occupation,  
-            'income' => $this->income,  
-            'family_members' => $this->family_members,  
-            'reason_interest' => $this->reason_interest,  
-            'personal_reference' => $this->personal_reference,  
-            'application_date' => $this->application_date  
-        ];  
-    }  
+    public function create(Contact $contact): bool
+    {
+        try {
+            $con = $this->getConnection();
+            if (!$this->isSubmited($contact->getIdUser(), $con)) {
+                $stmt = $con->prepare("INSERT INTO contact (id_user, name, birth, dui, email, phone, address, occupation, income, family_members, reason_interest, personal_reference, application_date) VALUES (:id_user, :name, :birth, :dui, :email, :phone, :address, :occupation, :income, :family_members, :reason_interest, :personal_reference, :application_date)");
+                $stmt->bindValue(":id_user", $contact->getIdUser());
+                $stmt->bindValue(":name", $contact->getName());
+                $stmt->bindValue(":birth", $contact->getBirth());
+                $stmt->bindValue(":dui", $contact->getDui());
+                $stmt->bindValue(":email", $contact->getEmail());
+                $stmt->bindValue(":phone", $contact->getPhone());
+                $stmt->bindValue(":address", $contact->getAddress());
+                $stmt->bindValue(":occupation", $contact->getOccupation());
+                $stmt->bindValue(":income", $contact->getIncome());
+                $stmt->bindValue(":family_members", $contact->getFamilyMembers());
+                $stmt->bindValue(":reason_interest", $contact->getReasonInterest());
+                $stmt->bindValue(":personal_reference", $contact->getPersonalReference());
+                $stmt->bindValue(":application_date", $contact->getApplicationDate());
+                $stmt->execute();
+                return true;
+            } else {
+                return false;
+            }
+        } catch (\Throwable $th) {
+            error_log("Error saving form contact: " . $th->getMessage());
+            throw new Exception("Error saving fomr contact.");
+        }
+    }
 }
