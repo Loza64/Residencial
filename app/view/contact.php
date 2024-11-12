@@ -95,7 +95,7 @@ if (!isset($_SESSION['user'])) {
         </div>
     </div>
 
-    <script src="scripts/contact.js"></script>
+    <script src="scripts/script.js"></script>
 </body>
 
 </html>
