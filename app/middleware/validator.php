@@ -10,7 +10,7 @@ function validateSignUp($post) {
         $errors["email"] = "Please input a valid email.";  
     }  
 
-    if (!preg_match('/^[a-zA-ZÁ-ÿ\s(),.-]{5,240}$/', $post["pass"])) {  
+    if (!preg_match('/^[a-zA-ZÁ-ÿ\s(),.-]{4,240}$/', $post["pass"])) {  
         $errors["password"] = "Please input a valid password.";  
     }  
 
