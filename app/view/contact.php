@@ -89,7 +89,7 @@ if (!isset($_SESSION['user'])) {
                     <label><input type="checkbox" required> Autorización para Comprobación de Datos</label>
                 </div>
                 <button type="submit" class="btn">
-                    <?php echo $formSubmitted ? "Usted ya ha mandado su formulario de contacto" : "Enviar"; ?>
+                    Enviar
                 </button>
             </form>
         </div>
