@@ -11,3 +11,4 @@ if (!isset($_SESSION['user'])) {
 
 $user = $_SESSION["user"];
 echo "Login exitoso bienvenido usuario: {$user["username"]}";
+?>
