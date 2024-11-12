@@ -43,27 +43,32 @@ function registerUser($post, Controller $controller)
 
 function saveContact($post, Controller $controller)
 {
-    $errors = validateContact($post);
-    if (!empty($errors)) {
-        errorResponse(400, $errors);
+    if (userSession()) {
+        $errors = validateContact($post);
+        if (!empty($errors)) {
+            errorResponse(400, $errors);
+        } else {
+            $contact = new Contact(
+                0,
+                $post["iduser"],
+                $post["name"],
+                new DateTime($post["birth"]),
+                $post["dui"],
+                $post["email"],
+                $post["phone"],
+                $post["address"],
+                $post["occupation"],
+                (float)$post["income"],
+                (int)$post["family_members"],
+                $post["reason_interest"],
+                $post["personal_reference"],
+                new DateTime($post["application_date"])
+            );
+            $controller->newContact($contact);
+        }
     } else {
-        $contact = new Contact(
-            0,
-            $post["iduser"],
-            $post["name"],
-            new DateTime($post["birth"]),
-            $post["dui"],
-            $post["email"],
-            $post["phone"],
-            $post["address"],
-            $post["occupation"],
-            (float)$post["income"],
-            (int)$post["family_members"],
-            $post["reason_interest"],
-            $post["personal_reference"],
-            new DateTime($post["application_date"])
-        );
-        $controller->newContact($contact);
+        http_response_code(401);
+        echo json_encode(["state" => false, "message" => "Your session has been  expired."]);
     }
 }
 
