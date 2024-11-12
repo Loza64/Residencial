@@ -17,12 +17,12 @@ function authenticateUser($post, $controller)
 function registerUser($post, $controller)
 {
     $errors = validateSignUp($post);
-    if (empty($post["user"]) || empty($post["email"]) || empty($post["pass"])) {
-        errorResponse(400, "Missing user, email, or password.");
+    if (empty($post["username"]) || empty($post["email"]) || empty($post["pass"])) {
+        errorResponse(400, "Missing user, email or password.");
     } else if (!empty($errors)) {
         errorResponse(400, $errors);
     } else {
-        $user = new user(0, $post["user"], $post["email"], password_hash($post["pass"], PASSWORD_DEFAULT), "");
+        $user = new user(0, $post["username"], $post["email"], password_hash($post["pass"], PASSWORD_DEFAULT), "");
         echo $controller->signUp($user);
     }
 }
