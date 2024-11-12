@@ -59,9 +59,17 @@ function handlePostRequest($action, $post, $controller) {
 }  
 
 function handleGetRequest($action) {  
-    if ($action === "logout") {  
-        logout();
-    } else {  
-        errorResponse(404, "Action not found");  
+    switch ($action) {  
+        case "logout":  
+            logout();  
+            break;  
+
+        case "redirect":  
+            redirect();  
+            break;  
+
+        default:  
+            errorResponse(404, "Action not found");  
+            break;  
     }  
 }  

@@ -1,3 +1,11 @@
+<?php
+session_start();
+if (!isset($_SESSION['user'])) {
+    header('Location: ../../public/login.php');
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -15,6 +23,7 @@
         <nav class="navigation">
             <a href="#" onclick = "window.location.href='../Inicio/inicio.html'">Inicio</a>
             <a href="#" class="contact">Contacto</a>
+            <a href="#" onclick="window.location.href='http://localhost/residencial/?action=logout'">Cerrar Sesión</a>
         </nav>
     </header>
 
