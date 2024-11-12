@@ -8,7 +8,4 @@ if (!isset($_SESSION['user'])) {
         header('Location: inicio.php');
     }
 }
-
-$user = $_SESSION["user"];
-echo "Login exitoso bienvenido usuario: {$user["username"]}";
 ?>
