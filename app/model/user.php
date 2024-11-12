@@ -1,7 +1,7 @@
 <?php  
 require_once './app/connection/database.php';  
 
-class User extends Database  
+class user extends Database  
 {  
     private $id;  
     private $username;  
