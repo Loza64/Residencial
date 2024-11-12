@@ -55,19 +55,9 @@ class Contact extends Database
         return $this->id;
     }
 
-    public function setId(?int $id): void
-    {
-        $this->id = $id;
-    }
-
     public function getIdUser(): ?int
     {
         return $this->id_user;
-    }
-
-    public function setIdUser(?int $id_user): void
-    {
-        $this->id_user = $id_user;
     }
 
     public function getName(): ?string
@@ -75,19 +65,9 @@ class Contact extends Database
         return $this->name;
     }
 
-    public function setName(?string $name): void
-    {
-        $this->name = $name;
-    }
-
     public function getDui(): ?string
     {
         return $this->dui;
-    }
-
-    public function setDui(?string $dui): void
-    {
-        $this->dui = $dui;
     }
 
     public function getEmail(): ?string
@@ -95,19 +75,9 @@ class Contact extends Database
         return $this->email;
     }
 
-    public function setEmail(?string $email): void
-    {
-        $this->email = $email;
-    }
-
     public function getPhone(): ?string
     {
         return $this->phone;
-    }
-
-    public function setPhone(?string $phone): void
-    {
-        $this->phone = $phone;
     }
 
     public function getAddress(): ?string
@@ -115,19 +85,9 @@ class Contact extends Database
         return $this->address;
     }
 
-    public function setAddress(?string $address): void
-    {
-        $this->address = $address;
-    }
-
     public function getOccupation(): ?string
     {
         return $this->occupation;
-    }
-
-    public function setOccupation(?string $occupation): void
-    {
-        $this->occupation = $occupation;
     }
 
     public function getIncome(): ?float
@@ -135,19 +95,9 @@ class Contact extends Database
         return $this->income;
     }
 
-    public function setIncome(?float $income): void
-    {
-        $this->income = $income;
-    }
-
     public function getFamilyMembers(): ?int
     {
         return $this->family_members;
-    }
-
-    public function setFamilyMembers(?int $family_members): void
-    {
-        $this->family_members = $family_members;
     }
 
     public function getReasonInterest(): ?string
@@ -155,19 +105,9 @@ class Contact extends Database
         return $this->reason_interest;
     }
 
-    public function setReasonInterest(?string $reason_interest): void
-    {
-        $this->reason_interest = $reason_interest;
-    }
-
     public function getPersonalReference(): ?string
     {
         return $this->personal_reference;
-    }
-
-    public function setPersonalReference(?string $personal_reference): void
-    {
-        $this->personal_reference = $personal_reference;
     }
 
     public function getBirth(): ?DateTime
@@ -175,19 +115,9 @@ class Contact extends Database
         return $this->birth;
     }
 
-    public function setBirth(?DateTime $birth): void
-    {
-        $this->birth = $birth;
-    }
-
     public function getApplicationDate(): ?DateTime
     {
         return $this->application_date;
-    }
-
-    public function setApplicationDate(?DateTime $application_date): void
-    {
-        $this->application_date = $application_date;
     }
 
     private function isSubmited(int $iduser, PDO $con): bool
@@ -199,6 +129,7 @@ class Contact extends Database
             return $stmt->fetchColumn() > 0;
         } catch (\Throwable $th) {
             error_log("Error checking user existence: " . $th->getMessage());
+            throw new Exception("Error checking user existence: " . $th->getMessage());
         }
     }
 
@@ -210,7 +141,7 @@ class Contact extends Database
                 $stmt = $con->prepare("INSERT INTO contact (id_user, name, birth, dui, email, phone, address, occupation, income, family_members, reason_interest, personal_reference, application_date) VALUES (:id_user, :name, :birth, :dui, :email, :phone, :address, :occupation, :income, :family_members, :reason_interest, :personal_reference, :application_date)");
                 $stmt->bindValue(":id_user", $contact->getIdUser());
                 $stmt->bindValue(":name", $contact->getName());
-                $stmt->bindValue(":birth", $contact->getBirth());
+                $stmt->bindValue(":birth", $contact->getBirth()->format('Y-m-d'));
                 $stmt->bindValue(":dui", $contact->getDui());
                 $stmt->bindValue(":email", $contact->getEmail());
                 $stmt->bindValue(":phone", $contact->getPhone());
@@ -220,7 +151,7 @@ class Contact extends Database
                 $stmt->bindValue(":family_members", $contact->getFamilyMembers());
                 $stmt->bindValue(":reason_interest", $contact->getReasonInterest());
                 $stmt->bindValue(":personal_reference", $contact->getPersonalReference());
-                $stmt->bindValue(":application_date", $contact->getApplicationDate());
+                $stmt->bindValue(":application_date", $contact->getApplicationDate()->format('Y-m-d'));
                 $stmt->execute();
                 return true;
             } else {
@@ -228,7 +159,7 @@ class Contact extends Database
             }
         } catch (\Throwable $th) {
             error_log("Error saving form contact: " . $th->getMessage());
-            throw new Exception("Error saving fomr contact.");
+            throw new Exception("Error saving form contact: " . $th->getMessage());
         }
     }
 }

@@ -23,9 +23,7 @@ function userSession(): ?User
 function authenticateUser($post, Controller $controller)
 {
     $errors = validateLogin($post);
-    if (empty($post["email"]) || empty($post["pass"])) {
-        errorResponse(400, "Missing email or password.");
-    } else if (!empty($errors)) {
+    if (!empty($errors)) {
         errorResponse(400, $errors);
     } else {
         echo $controller->login($post["email"], $post["pass"]);
@@ -35,13 +33,37 @@ function authenticateUser($post, Controller $controller)
 function registerUser($post, Controller $controller)
 {
     $errors = validateSignUp($post);
-    if (empty($post["username"]) || empty($post["email"]) || empty($post["pass"])) {
-        errorResponse(400, "Missing user, email or password.");
-    } else if (!empty($errors)) {
+    if (!empty($errors)) {
         errorResponse(400, $errors);
     } else {
         $user = new User(null, $post["username"], $post["email"], $post["pass"]);
         echo $controller->signUp($user);
+    }
+}
+
+function saveContact($post, Controller $controller)
+{
+    $errors = validateContact($post);
+    if (!empty($errors)) {
+        errorResponse(400, $errors);
+    } else {
+        $contact = new Contact(
+            0,
+            $post["iduser"],
+            $post["name"],
+            new DateTime($post["birth"]),
+            $post["dui"],
+            $post["email"],
+            $post["phone"],
+            $post["address"],
+            $post["occupation"],
+            (float)$post["income"],
+            (int)$post["family_members"],
+            $post["reason_interest"],
+            $post["personal_reference"],
+            new DateTime($post["application_date"])
+        );
+        $controller->newContact($contact);
     }
 }
 
@@ -51,24 +73,25 @@ function logout()
 {
     session_start();
     session_destroy();
-    header('Location: /residencial/public/login.php'); 
+    header('Location: /residencial/public/login.php');
 }
 
-function redirect() {  
-    $user = userSession();  
-    if ($user != null) {  
-        $role = $user->getRol();  
-        if ($role === "resident" || $role === "s_admin" || $role === "admin") {  
-            header('Location: /residencial/app/view/inicio.php'); 
-            exit;  
-        }  
-         
-        header('Location: ./view/error.php');  
-        exit;  
-    } else {  
-        header('Location: /residencial/public/login.php');  
-        exit;  
-    }  
+function redirect()
+{
+    $user = userSession();
+    if ($user != null) {
+        $role = $user->getRol();
+        if ($role === "resident" || $role === "s_admin" || $role === "admin") {
+            header('Location: /residencial/app/view/inicio.php');
+            exit;
+        }
+
+        header('Location: ./view/error.php');
+        exit;
+    } else {
+        header('Location: /residencial/public/login.php');
+        exit;
+    }
 }
 
 //Error

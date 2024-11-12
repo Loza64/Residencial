@@ -33,54 +33,55 @@ if (!isset($_SESSION['user'])) {
 
         <div class="form-box contact">
             <h2>Contacto</h2>
-            <form action="../controller/contactController.php" method="POST">
+            <form id="contact">
                 <div class="form-columns">
                     <div class="input-box">
-                        <input type="text" required>
+                        <input type="hidden" name="iduser" value="<?php echo $_SESSION['user']['id'] ?>" required>
+                        <input type="text" name="name" required>
                         <label>Nombre Completo</label>
                     </div>
                     <div class="input-box">
-                        <input type="date" required>
+                        <input type="date" name="birth" required>
                         <label>Fecha de Nacimiento</label>
                     </div>
                     <div class="input-box">
-                        <input type="text" required>
+                        <input type="text" name="dui" required>
                         <label>DUI</label>
                     </div>
                     <div class="input-box">
-                        <input type="email" required>
+                        <input type="email" name="email" required>
                         <label>Correo Electrónico</label>
                     </div>
                     <div class="input-box">
-                        <input type="text" required>
+                        <input type="text" name="phone" required>
                         <label>Número de Teléfono</label>
                     </div>
                     <div class="input-box">
-                        <input type="text" required>
+                        <input type="text" name="address" required>
                         <label>Dirección Actual</label>
                     </div>
                     <div class="input-box">
-                        <input type="text" required>
+                        <input type="text" name="occupation" required>
                         <label>Ocupación</label>
                     </div>
                     <div class="input-box">
-                        <input type="text" required>
+                        <input type="number" name="income" required>
                         <label>Ingreso Mensual Aproximado</label>
                     </div>
                     <div class="input-box">
-                        <input type="number" required>
+                        <input type="number" name="family_members" required>
                         <label>Número de Personas en el Hogar</label>
                     </div>
                     <div class="input-box">
-                        <input type="text" required>
+                        <input type="text" name="reason_interest" required>
                         <label>Motivo de Interés en la Residencial</label>
                     </div>
                     <div class="input-box">
-                        <input type="text" required>
+                        <input type="text" name="personal_reference" required>
                         <label>Referencias Personales (Nombre, Teléfono, Relación)</label>
                     </div>
                     <div class="input-box">
-                        <input type="date" required>
+                        <input type="date" name="application_date" required>
                         <label>Fecha de Aplicación</label>
                     </div>
                 </div>
@@ -92,13 +93,9 @@ if (!isset($_SESSION['user'])) {
                 </button>
             </form>
         </div>
-
-
-
     </div>
 
-
-
+    <script src="scripts/contact.js"></script>
 </body>
 
 </html>
