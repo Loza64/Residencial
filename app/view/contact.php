@@ -21,7 +21,7 @@ if (!isset($_SESSION['user'])) {
     <header>
         <h2 class="logo">Residencial San Francisco</h2>
         <nav class="navigation">
-            <a href="#" onclick = "window.location.href='../Inicio/inicio.html'">Inicio</a>
+            <a href="#" onclick = "window.location.href='inicio.php'">Inicio</a>
             <a href="#" class="contact">Contacto</a>
             <a href="#" onclick="window.location.href='http://localhost/residencial/?action=logout'">Cerrar Sesión</a>
         </nav>
