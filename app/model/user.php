@@ -3,46 +3,47 @@ require_once './app/connection/database.php';
 
 class user extends database
 {
-    private $id;
-    private $username;
-    private $email;
-    private $pass;
-    private $rol;
+    private $id;  
+    private $username;  
+    private $email;  
+    private $pass;  
+    private $rol;  
+ 
+    public function __construct() {  
+        $this->id = null;  
+        $this->username = null;  
+        $this->email = null;  
+        $this->pass = null;  
+        $this->rol = null;  
+    }  
 
-    public function __construct($id = null, $username = null, $email = null, $pass = null, $rol = null)
-    {
-        $this->id = $id;
-        $this->username = $username;
-        $this->email = $email;
-        $this->pass = $pass;
-        $this->rol = $rol;
-    }
+    public function __constructFull($id, $username, $email, $pass, $rol) {  
+        $this->id = $id;  
+        $this->username = $username;  
+        $this->email = $email;  
+        $this->pass = $pass;  
+        $this->rol = $rol;  
+    }  
 
-    // Getters
-    public function getId()
-    {
-        return $this->id;
-    }
+    public function getId() {  
+        return $this->id;  
+    }  
 
-    public function getUsername()
-    {
-        return $this->username;
-    }
+    public function getUsername() {  
+        return $this->username;  
+    }  
 
-    public function getEmail()
-    {
-        return $this->email;
-    }
+    public function getEmail() {  
+        return $this->email;  
+    }  
 
-    public function getPass()
-    {
-        return $this->pass;
-    }
+    public function getPass() {  
+        return $this->pass;  
+    }  
 
-    public function getRol()
-    {
-        return $this->rol;
-    } 
+    public function getRol() {  
+        return $this->rol;  
+    }  
 
     private function checkuser($username, $email)
     {
