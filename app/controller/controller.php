@@ -1,17 +1,17 @@
 <?php
 require_once './app/model/user.php';
 
-class controller
+class Controller
 {
 
     private $userDao;
 
     function __construct()
     {
-        $this->userDao = new user();
+        $this->userDao = new User();
     }
 
-    function signUp(user $user)
+    function signUp(User $user)
     {
         try {
             $response = $this->userDao->create($user);

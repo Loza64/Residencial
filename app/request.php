@@ -2,7 +2,7 @@
 require_once './app/middleware/validator.php';
 
 //Post
-function authenticateUser($post, controller $controller)
+function authenticateUser($post, Controller $controller)
 {
     $errors = validateLogin($post);
     if (empty($post["email"]) || empty($post["pass"])) {
@@ -14,7 +14,7 @@ function authenticateUser($post, controller $controller)
     }
 }
 
-function registerUser($post, controller $controller)
+function registerUser($post, Controller $controller)
 {
     $errors = validateSignUp($post);
     if (empty($post["username"]) || empty($post["email"]) || empty($post["pass"])) {
@@ -22,7 +22,7 @@ function registerUser($post, controller $controller)
     } else if (!empty($errors)) {
         errorResponse(400, $errors);
     } else {
-        $user = new user(null, $post["username"], $post["email"], $post["pass"]);
+        $user = new User(null, $post["username"], $post["email"], $post["pass"]);
         echo $controller->signUp($user);
     }
 }

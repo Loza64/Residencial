@@ -1,7 +1,7 @@
 <?php
 require_once './app/config/settings.php';
 
-class database
+class Database
 {
     protected function getConnection()
     {
