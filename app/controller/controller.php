@@ -27,7 +27,7 @@ class controller
                 echo json_encode(["state" => true, "message" => "login succes."]);
             } else {
                 http_response_code(401);
-                echo json_encode(["state" => false, "message" => "email incorrect."]);
+                echo json_encode(["state" => false, "message" => "email or password incorrect."]);
             }
         } catch (\Throwable $th) {
             http_response_code(500);

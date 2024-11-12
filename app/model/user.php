@@ -64,9 +64,14 @@ class user extends database
             if (!$this->checkuser($user->getUsername(), $user->getEmail())) {
                 $con = $this->getConnection();
                 $stmt = $con->prepare("INSERT INTO users (username, email, pass) VALUES (:username, :email, :pass)");
-                $stmt->bindParam(':username', $user->getUsername());
-                $stmt->bindParam(':email', $user->getEmail());
-                $stmt->bindParam(':pass', $user->getPassword());
+
+                $username = $user->getUsername();
+                $email = $user->getEmail();
+                $password  = $user->getPassword();
+
+                $stmt->bindParam(':username', $username);
+                $stmt->bindParam(':email', $email);
+                $stmt->bindParam(':pass', $password);
                 $stmt->execute();
                 return true;
             } else {
