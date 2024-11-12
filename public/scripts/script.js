@@ -64,6 +64,8 @@ document.getElementById("signup").addEventListener("submit", async (e) => {
         alert(result.message)
     }else if(response.status === 400){
         alert(JSON.stringify(result.message))
+    }else{
+        alert(JSON.stringify(result.message))
     }
 
 })
