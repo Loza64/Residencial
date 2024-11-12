@@ -1,10 +1,17 @@
 <?php
 session_start();
+require_once '../app/connection/database.php';
+require_once '../app/controller/contactController.php';
+
 if (!isset($_SESSION['user'])) {
     header('Location: ../../public/login.php');
+    exit();
 }
 
+$user_id = $_SESSION['user']['id'];
+$formSubmitted = ContactController::isFormSubmitted($user_id);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -32,7 +39,7 @@ if (!isset($_SESSION['user'])) {
 
         <div class="form-box contact">
             <h2>Contacto</h2>
-            <form action="#">
+            <form action="../controller/contactController.php" method="POST">
                 <div class="form-columns">
                     <div class="input-box">
                         <input type="text" required>
@@ -86,7 +93,9 @@ if (!isset($_SESSION['user'])) {
                 <div class="remember">
                     <label><input type="checkbox" required> Autorización para Comprobación de Datos</label>
                 </div>
-                <button type="submit" class="btn">Enviar</button>
+                <button type="submit" class="btn" <?php if ($formSubmitted) echo 'disabled'; ?>>
+                    <?php echo $formSubmitted ? "Usted ya ha mandado su formulario de contacto" : "Enviar"; ?>
+                </button>
             </form>
         </div>
         
