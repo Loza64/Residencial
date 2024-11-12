@@ -1,8 +1,26 @@
 <?php
 require_once './app/middleware/validator.php';
+require_once './app/model/user.php';
+
+function userSession(): ?User
+{
+    session_start();
+    if (isset($_SESSION['user'])) {
+        $user = $_SESSION['user'];
+        return new User(
+            $user["id"],
+            $user["username"],
+            $user["email"],
+            null,
+            $user["rol"]
+        );
+    } else {
+        return null;
+    }
+}
 
 //Post
-function authenticateUser($post, controller $controller)
+function authenticateUser($post, Controller $controller)
 {
     $errors = validateLogin($post);
     if (empty($post["email"]) || empty($post["pass"])) {
@@ -14,7 +32,7 @@ function authenticateUser($post, controller $controller)
     }
 }
 
-function registerUser($post, controller $controller)
+function registerUser($post, Controller $controller)
 {
     $errors = validateSignUp($post);
     if (empty($post["username"]) || empty($post["email"]) || empty($post["pass"])) {
@@ -22,7 +40,7 @@ function registerUser($post, controller $controller)
     } else if (!empty($errors)) {
         errorResponse(400, $errors);
     } else {
-        $user = new user(null, $post["username"], $post["email"], $post["pass"]);
+        $user = new User(null, $post["username"], $post["email"], $post["pass"]);
         echo $controller->signUp($user);
     }
 }
@@ -33,8 +51,24 @@ function logout()
 {
     session_start();
     session_destroy();
-    http_response_code(200);
-    echo json_encode(["state" => true, "message" => "Session closed"]);
+    header('Location: /residencial/public/login.php'); 
+}
+
+function redirect() {  
+    $user = userSession();  
+    if ($user != null) {  
+        $role = $user->getRol();  
+        if ($role === "resident" || $role === "s_admin" || $role === "admin") {  
+            header('Location: /residencial/app/view/inicio.php'); 
+            exit;  
+        }  
+         
+        header('Location: ./view/error.php');  
+        exit;  
+    } else {  
+        header('Location: /residencial/public/login.php');  
+        exit;  
+    }  
 }
 
 //Error

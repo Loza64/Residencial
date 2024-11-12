@@ -1,10 +1,9 @@
 <?php  
 require_once 'app/controller/controller.php';  
-require_once 'app/model/user.php';  
 require_once 'app/config/settings.php';  
 require_once 'app/request.php';  
  
-$config = new settings();
+$config = new Settings();
 if ($config->getMode() == "DEVELOPMENT") {  
     ini_set('display_errors', 1);  
     ini_set('display_startup_errors', 1);  
@@ -26,7 +25,7 @@ function getPost(){
     json_decode(file_get_contents("php://input"), true) : $_POST;
 }
 
-$controller = new controller(); 
+$controller = new Controller(); 
   
 switch ($_SERVER["REQUEST_METHOD"]) {
     case 'POST':  
@@ -60,9 +59,17 @@ function handlePostRequest($action, $post, $controller) {
 }  
 
 function handleGetRequest($action) {  
-    if ($action === "logout") {  
-        logout();
-    } else {  
-        errorResponse(404, "Action not found");  
+    switch ($action) {  
+        case "logout":  
+            logout();  
+            break;  
+
+        case "redirect":  
+            redirect();  
+            break;  
+
+        default:  
+            errorResponse(404, "Action not found");  
+            break;  
     }  
 }  

@@ -13,8 +13,6 @@
     <header>
         <h2 class="logo">Residencial San Francisco</h2>
         <nav class="navigation">
-            <a href="#" onclick="window.location.href='../Inicio/inicio.html'">Inicio</a>
-            <a href="#" onclick="window.location.href='../Contact/contact.html'">Contacto</a>
             <button class="btnLogin-pop">Login</button>
         </nav>
     </header>
@@ -94,7 +92,7 @@
     </div>
 
 
-    <script src="scripts/script.js"></script>
+    <script src="scripts/login.js"></script>
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>

@@ -36,7 +36,7 @@ document.getElementById("login").addEventListener('submit', async (e) => {
     const result = await response.json();
     if (response.status === 200) {
         alert(result.message);
-        window.location.href = '../app/view/dashboard.php';
+        window.location.href = 'http://localhost/residencial/?action=redirect';
     } else if (response.status === 401) {
         alert(result.message)
     }
