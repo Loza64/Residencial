@@ -82,7 +82,21 @@ class Controller
             $this->jsonResponse(["state" => false, "message" => "An error occurred."], 500);  
             error_log($th->getMessage());  
         }  
-    }  
+    }
+    
+    function deleteUser(int $id){  
+        try {  
+            $deleted = $this->userDao->deleteById($id);  
+            if($deleted) {  
+                $this->jsonResponse(["state" => true, "message" => "User deleted successfully."], 200);  
+            } else {  
+                $this->jsonResponse(["state" => false, "message" => "User not found or could not be deleted."], 404);  
+            }  
+        } catch (\Throwable $th) {  
+            $this->jsonResponse(["state" => false, "message" => "An error occurred."], 500);  
+            error_log($th->getMessage());   
+        }  
+    }
 
     function newContact(Contact $contact)  
     {  

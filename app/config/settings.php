@@ -9,6 +9,7 @@ class Settings
     private $user;  
     private $pass;  
     private $mode;  
+    private $domain;
 
     public function __construct()
     {  
@@ -16,7 +17,8 @@ class Settings
         $this->dsn = $_ENV["DSN"] ?? null; 
         $this->user = $_ENV["USER"] ?? null;  
         $this->pass = $_ENV["PASS"] ?? null;  
-        $this->mode = $_ENV["MODE"] ?? null;  
+        $this->mode = $_ENV["MODE"] ?? null; 
+        $this->domain = $_ENV["DOMAIN"] ?? null;   
     }  
 
     public function getDsn()  
@@ -38,4 +40,9 @@ class Settings
     {  
         return $this->mode;  
     }  
+
+    public function getDomain()  
+    {  
+        return $this->domain;  
+    }
 }
