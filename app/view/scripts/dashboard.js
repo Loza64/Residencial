@@ -22,6 +22,7 @@ async function deleteUser(userId) {
         const result = await response.json();
         if (response.status === 200) {
             alert(result.message);
+            fetchUsers(searchTerm = '')
         } else {
             alert(`error ${response.status}: ${response.message}`);
         }
