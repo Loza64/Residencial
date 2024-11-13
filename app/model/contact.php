@@ -162,4 +162,38 @@ class Contact extends Database
             throw new Exception("Error saving form contact: " . $th->getMessage());
         }
     }
+
+    public function getContactByUserId(int $iduser): ?Contact  
+{  
+    try {  
+        $con = $this->getConnection();  
+        $stmt = $con->prepare("SELECT * FROM contact WHERE id_user = :iduser");  
+        $stmt->bindParam(":iduser", $iduser);  
+        $stmt->execute();  
+        $response = $stmt->fetch(PDO::FETCH_ASSOC);  
+        if ($response) {  
+            return new Contact(  
+                $response["id"],  
+                $response["id_user"],  
+                $response["name"],  
+                new DateTime($response["birth"]), 
+                $response["dui"],  
+                $response["email"],  
+                $response["phone"],  
+                $response["address"],  
+                $response["occupation"],
+                $response["income"],  
+                $response["family_members"],  
+                $response["reason_interest"],  
+                $response["personal_reference"],  
+                new DateTime($response["application_date"]) 
+            );  
+        } else {  
+            return null;  
+        }  
+    } catch (\Throwable $th) {  
+        error_log("Error to get info: " . $th->getMessage());  
+        throw new Exception("Error to get info: " . $th->getMessage());  
+    }  
+}
 }
