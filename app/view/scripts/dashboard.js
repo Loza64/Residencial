@@ -80,6 +80,8 @@ async function fetchUsers(searchTerm = '') {
     } else if (response.status === 404) {
         alert(result.message)
         fetchUsers();
+    }else if (response.status === 404) {
+        alert(result.message.parameter)
     }
     else {
         alert(`Error ${response.status}: ${result.message}`)
