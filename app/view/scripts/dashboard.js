@@ -1,39 +1,3 @@
-function openCardDetails(name, dui, email, phone, address, occupation, income, familyMembers, interest, reference, applicationDate) {
-    const detailsWindow = window.open("", "_blank", "width=400,height=600");
-    detailsWindow.document.write(`
-        <html>
-            <head>
-                <title>Detalles de la Solicitud</title>
-                <style>
-                    body { font-family: 'Poppins', sans-serif; 
-                            padding: 20px; 
-                            line-height: 1.6; 
-                            background-color: #2c3e50; 
-                            color: #FFFFFF;  
-                        }
-                    h2 { color: #FFFFFF; }
-                    p { margin: 10px 0; }
-                </style>
-            </head>
-            <body>
-                <h2>Detalles de la Solicitud</h2>
-                <p><strong>Nombre:</strong> ${name}</p>
-                <p><strong>DUI:</strong> ${dui}</p>
-                <p><strong>Email:</strong> ${email}</p>
-                <p><strong>Teléfono:</strong> ${phone}</p>
-                <p><strong>Dirección:</strong> ${address}</p>
-                <p><strong>Ocupación:</strong> ${occupation}</p>
-                <p><strong>Ingreso Mensual:</strong> $${income}</p>
-                <p><strong>Miembros del Hogar:</strong> ${familyMembers}</p>
-                <p><strong>Motivo de Interés:</strong> ${interest}</p>
-                <p><strong>Referencias:</strong> ${reference}</p>
-                <p><strong>Fecha de Aplicación:</strong> ${applicationDate}</p>
-            </body>
-        </html>
-    `);
-    detailsWindow.document.close();
-}
-
 function showSection(sectionId) {
 
     document.getElementById('user-section').style.display = sectionId === 'user-section' ? 'block' : 'none';
@@ -86,43 +50,90 @@ async function fetchUsers(searchTerm = '') {
         }
     } else if (response.status === 400) {
         alert(result.message.parameter)
-    }
-    else {
+    } else {
         alert(`Error ${response.status}: ${result.message}`)
     }
 }
 
+function openCardDetails(username, name, dui, email, phone, address, occupation, income, familyMembers, interest, reference, applicationDate) {
+    const detailsWindow = window.open("", "_blank", "width=400,height=600");
+    detailsWindow.document.write(`
+        <html>
+            <head>
+                <title>Detalles de la Solicitud</title>
+                <style>
+                    body { font-family: 'Poppins', sans-serif; 
+                            padding: 20px; 
+                            line-height: 1.6; 
+                            background-color: #2c3e50; 
+                            color: #FFFFFF;  
+                        }
+                    h2 { color: #FFFFFF; }
+                    p { margin: 10px 0; }
+                </style>
+            </head>
+            <body>
+                <h2>Detalles de la Solicitud</h2>
+                <p><strong>usuario:</strong> ${username}</p>
+                <p><strong>Nombre:</strong> ${name}</p>
+                <p><strong>DUI:</strong> ${dui}</p>
+                <p><strong>Email:</strong> ${email}</p>
+                <p><strong>Teléfono:</strong> ${phone}</p>
+                <p><strong>Dirección:</strong> ${address}</p>
+                <p><strong>Ocupación:</strong> ${occupation}</p>
+                <p><strong>Ingreso Mensual:</strong> $${income}</p>
+                <p><strong>Miembros del Hogar:</strong> ${familyMembers}</p>
+                <p><strong>Motivo de Interés:</strong> ${interest}</p>
+                <p><strong>Referencias:</strong> ${reference}</p>
+                <p><strong>Fecha de Aplicación:</strong> ${applicationDate}</p>
+            </body>
+        </html>
+    `);
+    detailsWindow.document.close();
+}
+
 async function fetchContacts() {  
-    const card_container = document.querySelector(".card-container"); // Asegúrate de que esto esté correcto  
+    const card_container = document.querySelector(".card-container");  
+    const response = await fetch('http://localhost/residencial/?action=listcontacts');  
+    const result = await response.json();  
 
-    try {  
-        const response = await fetch('http://localhost/residencial/?action=listcontacts');  
-        const result = await response.json();  
+    if (response.status === 200) {  
+        const contacts = result.contacts;  
 
-        if (response.status === 200) {  
-            const contacts = result.contacts;  
-            contacts.forEach((item) => {  
-                const div = document.createElement('div');  
-                div.className = "card";  
-                div.dataset.id = item.id;
-                div.innerHTML = `  
+        contacts.forEach((item) => {  
+            const div = document.createElement('div');  
+            div.className = "card";  
+            div.dataset.id = item.id;  
+            
+            div.onclick = () => openCardDetails( 
+                item.user, 
+                item.name,  
+                item.dui,  
+                item.email,  
+                item.phone,  
+                item.address,  
+                item.occupation,  
+                item.income,  
+                item.family_members,  
+                item.reason_interest,  
+                item.personal_reference,  
+                item.application_date  
+            );  
+            
+            div.innerHTML = `  
                 <p><strong>Nombre:</strong> ${item.name}</p>  
                 <p><strong>DUI:</strong> ${item.dui}</p>  
                 <p><strong>Teléfono:</strong> ${item.phone}</p>  
                 <p><strong>Dirección:</strong> ${item.address}</p>  
-                `;  
-                card_container.appendChild(div);  
-            });  
-        } else {  
-            console.error('Error al obtener contactos:', response.status);  
-        }  
-    } catch (error) {  
-        console.error('Error en la solicitud:', error);  
+            `;  
+            card_container.appendChild(div);  
+        });  
+    } else if (response.status === 401) {  
+        alert(result.message);  
+    } else {  
+        alert(`Error ${response.status}: ${result.message}`);  
     }  
 }  
-
-// Llama a la función para que se ejecute.  
-fetchContacts();
 
 window.onload = function () {
     fetchUsers();
