@@ -55,44 +55,47 @@ async function fetchUsers(searchTerm = '') {
     }
 }
 
-function openCardDetails(username, name, dui, email, phone, address, occupation, income, familyMembers, interest, reference, applicationDate) {
+function openCardDetails(contact) {
+    const {user, name, dui, email, phone, address, occupation, income, family_members, reason_interest, personal_reference, application_date  } = contact; 
+
     const detailsWindow = window.open("", "_blank", "width=400,height=600");
-    detailsWindow.document.write(`
-        <html>
-            <head>
-                <title>Detalles de la Solicitud</title>
-                <style>
-                    body { font-family: 'Poppins', sans-serif; 
-                            padding: 20px; 
-                            line-height: 1.6; 
-                            background-color: #2c3e50; 
+    detailsWindow.document.write(`  
+        <html>  
+            <head>  
+                <title>Detalles de la Solicitud</title>  
+                <style>  
+                    body { font-family: 'Poppins', sans-serif;   
+                            padding: 20px;   
+                            line-height: 1.6;   
+                            background-color: #2c3e50;   
                             color: #FFFFFF;  
-                        }
-                    h2 { color: #FFFFFF; }
-                    p { margin: 10px 0; }
-                </style>
-            </head>
-            <body>
-                <h2>Detalles de la Solicitud</h2>
-                <p><strong>usuario:</strong> ${username}</p>
-                <p><strong>Nombre:</strong> ${name}</p>
-                <p><strong>DUI:</strong> ${dui}</p>
-                <p><strong>Email:</strong> ${email}</p>
-                <p><strong>Teléfono:</strong> ${phone}</p>
-                <p><strong>Dirección:</strong> ${address}</p>
-                <p><strong>Ocupación:</strong> ${occupation}</p>
-                <p><strong>Ingreso Mensual:</strong> $${income}</p>
-                <p><strong>Miembros del Hogar:</strong> ${familyMembers}</p>
-                <p><strong>Motivo de Interés:</strong> ${interest}</p>
-                <p><strong>Referencias:</strong> ${reference}</p>
-                <p><strong>Fecha de Aplicación:</strong> ${applicationDate}</p>
-            </body>
-        </html>
+                        }  
+                    h2 { color: #FFFFFF; }  
+                    p { margin: 10px 0; }  
+                </style>  
+            </head>  
+            <body>  
+                <h2>Detalles de la Solicitud</h2>  
+                <p><strong>Usuario:</strong> ${user}</p>  
+                <p><strong>Nombre:</strong> ${name}</p>  
+                <p><strong>DUI:</strong> ${dui}</p>  
+                <p><strong>Email:</strong> ${email}</p>  
+                <p><strong>Teléfono:</strong> ${phone}</p>  
+                <p><strong>Dirección:</strong> ${address}</p>  
+                <p><strong>Ocupación:</strong> ${occupation}</p>  
+                <p><strong>Ingreso Mensual:</strong> $${income}</p>  
+                <p><strong>Miembros del Hogar:</strong> ${family_members}</p>  
+                <p><strong>Motivo de Interés:</strong> ${reason_interest}</p>  
+                <p><strong>Referencias:</strong> ${personal_reference}</p>  
+                <p><strong>Fecha de Aplicación:</strong> ${application_date}</p>  
+            </body>  
+        </html>  
     `);
     detailsWindow.document.close();
 }
 
 async function fetchContacts() {  
+
     const card_container = document.querySelector(".card-container");  
     const response = await fetch('http://localhost/residencial/?action=listcontacts');  
     const result = await response.json();  
@@ -105,20 +108,7 @@ async function fetchContacts() {
             div.className = "card";  
             div.dataset.id = item.id;  
             
-            div.onclick = () => openCardDetails( 
-                item.user, 
-                item.name,  
-                item.dui,  
-                item.email,  
-                item.phone,  
-                item.address,  
-                item.occupation,  
-                item.income,  
-                item.family_members,  
-                item.reason_interest,  
-                item.personal_reference,  
-                item.application_date  
-            );  
+            div.onclick = () => openCardDetails(item);
             
             div.innerHTML = `  
                 <p><strong>Nombre:</strong> ${item.name}</p>  
@@ -133,7 +123,7 @@ async function fetchContacts() {
     } else {  
         alert(`Error ${response.status}: ${result.message}`);  
     }  
-}  
+}
 
 window.onload = function () {
     fetchUsers();
