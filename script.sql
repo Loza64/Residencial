@@ -6,6 +6,7 @@ CREATE TABLE users (
     email VARCHAR(150) NOT NULL UNIQUE,
     pass VARCHAR(200) NOT NULL,
     rol ENUM('s_admin', 'admin', 'resident') DEFAULT 'resident' NOT NULL,
+    state ENUM('approved', 'denied') DEFAULT 'denied' NOT NULL,
     CONSTRAINT check_username CHECK (username REGEXP '^[a-zA-ZÁ-ÿ0-9]{4,13}$'),
     CONSTRAINT check_email CHECK (email REGEXP '^[\\w._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,10}$'),
     CONSTRAINT check_pass CHECK (pass REGEXP '^\\$2y\\$[0-9]{2}\\$[./0-9A-Za-z]{22}[./0-9A-Za-z]{31}$')

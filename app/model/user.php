@@ -8,6 +8,7 @@ class User extends Database
     private $email;
     private $pass;
     private $rol;
+    private $state;
 
     private function setPass($password)
     {
@@ -20,13 +21,14 @@ class User extends Database
         return null;
     }
 
-    public function __construct($id = null, $username = null, $email = null, $pass = null, $rol = null)
+    public function __construct($id = null, $username = null, $email = null, $pass = null, $rol = null, $state = null)
     {
         $this->id = $id;
         $this->username = $username;
         $this->email = $email;
         $this->pass = $this->setPass($pass);
         $this->rol = $rol;
+        $this->state = $state;
     }
 
     public function verifyPassword($password): bool
@@ -57,6 +59,11 @@ class User extends Database
     public function getRol()
     {
         return $this->rol;
+    }
+
+    public function getState()
+    {
+        return $this->state;
     }
 
     private function checkUserExists(string $username, string $email, PDO $con)
@@ -107,7 +114,8 @@ class User extends Database
                     $responce["username"],
                     $responce["email"],
                     $responce["pass"],
-                    $responce["rol"]
+                    $responce["rol"],
+                    $responce["state"]
                 ) : null;
         } catch (\PDOException $ex) {
             error_log("Error finding user by email: " . $ex->getMessage());
@@ -121,7 +129,7 @@ class User extends Database
         try {
             $con = $this->getConnection();
             $stmt = $con->prepare(
-                "select id ,username, email, rol from users where username like concat('%',:search,'%') and rol != 's_admin'"
+                "select id ,username, email, rol, state from users where username like concat('%',:search,'%') and rol != 's_admin'"
             );
             $stmt->bindParam(":search", $search);
             $stmt->execute();
@@ -131,7 +139,8 @@ class User extends Database
                     $row["username"],
                     $row["email"],
                     null,
-                    $row["rol"]
+                    $row["rol"],
+                    $row["state"],
                 ));
             }
             return $user;

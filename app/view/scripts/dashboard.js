@@ -40,9 +40,11 @@ async function fetchUsers(searchTerm = '') {
         users.forEach(user => {
             const listItem = document.createElement('li');
             listItem.innerHTML = `
-                    <span>Username: ${user.username} | Rol: ${user.rol}</span>
-                    <button onclick="deleteUser(${user.id})">Eliminar</button>
-                `;
+            <span>Estado: ${user.state}</span>
+            <span>Username: ${user.username}</span>
+            <span>Rol: ${user.rol}</span>
+            <button onclick="deleteUser(${user.id})">Eliminar</button>
+            `;
             userSection.appendChild(listItem);
         });
     } else if (response.status === 401) {

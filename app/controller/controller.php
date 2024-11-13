@@ -49,7 +49,8 @@ class Controller
                     "id" => $response->getId(),  
                     "username" => $response->getUsername(),  
                     "email" => $response->getEmail(),  
-                    "rol" => $response->getRol()  
+                    "rol" => $response->getRol(),
+                    "state" => $response->getState()
                 ];  
                 $this->jsonResponse(["state" => true, "message" => "Login successful."], 200);  
             } else {  
@@ -71,7 +72,8 @@ class Controller
                         'id' => $item->getId(),  
                         'username' => $item->getUsername(),  
                         'email' => $item->getEmail(),  
-                        'rol' => $item->getRol()  
+                        'rol' => $item->getRol(),
+                        'state' => $item->getState() 
                     ];  
                 }, $list);  
                 $this->jsonResponse(["state" => true, "users" => $jsonList], 200);  
