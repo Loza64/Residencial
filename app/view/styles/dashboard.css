@@ -191,3 +191,37 @@ header{
 .user-list button:hover {
     background-color: #c0392b;
 }
+
+.search-box {
+    width: 100%;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.search-box input {
+    width: 100%;
+    max-width: 400px;
+    padding: 12px 20px;
+    border: 2px solid #2c3e50;
+    border-radius: 10px;
+    font-size: 1em;
+    color: #2c3e50;
+    background: rgba(255, 255, 255, 0.9);
+    transition: all 0.3s ease;
+}
+
+.search-box input:focus {
+    outline: none;
+    box-shadow: 0 0 10px rgba(44, 62, 80, 0.3);
+    background: rgba(255, 255, 255, 1);
+}
+
+.search-box input::placeholder {
+    color: #95a5a6;
+}
+
+
+.user-list li {
+    transition: all 0.3s ease;
+}

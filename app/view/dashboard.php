@@ -78,6 +78,20 @@ if (!isset($_SESSION['user'])) {
                 // Acá iría el AJAX para eliminar de la base de datos
             }
         }
+
+        function filterUsers() {
+            const searchTerm = document.getElementById('userSearch').value.toLowerCase();
+            const userItems = document.querySelectorAll('.user-list li');
+            
+            userItems.forEach(item => {
+                const username = item.querySelector('span').textContent.toLowerCase();
+                if (username.includes(searchTerm)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
     </script>
 </head>
 
@@ -113,6 +127,16 @@ if (!isset($_SESSION['user'])) {
         <!-- Sección de Usuarios -->
         <div class="form-box users" id="user-section" style="display: none;">
             <h2>Lista de Usuarios</h2>
+
+            <div class="search-box">
+                <input 
+                    type="text" 
+                    id="userSearch" 
+                    placeholder="Buscar por username..."
+                    onkeyup="filterUsers()"
+                >
+            </div>
+            
             <ul class="user-list">
                 <li>
                     <span>Username: user1 | Rol: admin</span>
