@@ -43,14 +43,16 @@ function registerUser($post, Controller $controller)
 
 function saveContact($post, Controller $controller)
 {
-    if (userSession()) {
+
+    $user = userSession();
+    if ($user) {
         $errors = validateContact($post);
         if (!empty($errors)) {
             errorResponse(400, $errors);
         } else {
             $contact = new Contact(
-                0,
-                $post["iduser"],
+                null,
+                $user->getId(),
                 $post["name"],
                 new DateTime($post["birth"]),
                 $post["dui"],
@@ -96,6 +98,28 @@ function redirect()
     } else {
         header('Location: /residencial/public/login.php');
         exit;
+    }
+}
+
+function getUserList(?string $search, Controller $controller)
+{
+    $user = userSession();
+    if ($user) {
+        $errors = validateParameter($search);
+        if (!empty($errors)) {
+            http_response_code(400);
+            echo json_encode(["state" => false, "message" => $errors]);
+        } else {
+            if ($user->getRol() === "s_admin") {
+                $controller->getUserList($search);
+            } else {
+                http_response_code(401);
+                echo json_encode(["state" => false, "message" => "Your not granted permission to this request "]);
+            }
+        }
+    } else {
+        http_response_code(401);
+        echo json_encode(["state" => false, "message" => "Your session has been  expired."]);
     }
 }
 

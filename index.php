@@ -35,7 +35,7 @@ switch ($_SERVER["REQUEST_METHOD"]) {
         break;
 
     case 'GET':
-        handleGetRequest($_GET["action"]);
+        handleGetRequest($_GET["action"], $controller);
         break;
 
     default:
@@ -64,7 +64,7 @@ function handlePostRequest($action, $post, $controller)
     }
 }
 
-function handleGetRequest($action)
+function handleGetRequest($action, Controller $controller)
 {
     switch ($action) {
         case "logout":
@@ -73,6 +73,10 @@ function handleGetRequest($action)
 
         case "redirect":
             redirect();
+            break;
+
+        case "getusers":
+            getUserList($_GET["search"], $controller);
             break;
 
         default:

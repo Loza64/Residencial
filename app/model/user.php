@@ -114,4 +114,28 @@ class User extends Database
             throw new Exception("Error finding user by email.");
         }
     }
+
+    public function getUserList(?string $search): array
+    {
+        $user = [];
+        try {
+            $con = $this->getConnection();
+            $stmt = $con->prepare("select  id, username, email , rol from users where username like concat('%',:search,'%')");
+            $stmt->bindParam(":search", $search);
+            $stmt->execute();
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                array_push($user, new User(
+                    $row["id"],
+                    $row["username"],
+                    $row["email"],
+                    null,
+                    $row["rol"]
+                ));
+            }
+            return $user;
+        } catch (\Throwable $th) {
+            error_log($th->getMessage());
+            throw new Exception("Error to get user list");
+        }
+    }
 }
