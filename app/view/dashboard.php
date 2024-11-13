@@ -1,19 +1,13 @@
 <?php 
 
-
 session_start();
-if (!isset($_SESSION['user'])) {
-    header('Location: ../../public/login.php');
-}
-
-/*session_start();
 if (!isset($_SESSION['user'])) {
     header('Location: ../../public/login.php');
 } else {
     if ($_SESSION['user']["rol"] != "admin" && $_SESSION['user']["rol"] != "s_admin") {
        header('Location: inicio.php');
     }
-}*/
+}
 ?> 
 
 <!DOCTYPE html>
@@ -79,18 +73,42 @@ if (!isset($_SESSION['user'])) {
             }
         }
 
+        // Función para filtrar usuarios mediante búsqueda
         function filterUsers() {
             const searchTerm = document.getElementById('userSearch').value.toLowerCase();
-            const userItems = document.querySelectorAll('.user-list li');
-            
-            userItems.forEach(item => {
-                const username = item.querySelector('span').textContent.toLowerCase();
-                if (username.includes(searchTerm)) {
-                    item.style.display = 'flex';
+            fetchUsers(searchTerm); 
+        }
+
+        // Función para obtener usuarios desde la URL usando AJAX
+        function fetchUsers(searchTerm = '') {
+        fetch(`http://localhost/residencial/?action=getusers&search=${searchTerm}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.state) {  
+                    const users = data.users; 
+                    const userSection = document.querySelector('.user-list');
+                    userSection.innerHTML = ''; 
+
+                    users.forEach(user => {
+                        const listItem = document.createElement('li');
+                        listItem.innerHTML = `
+                            <span>Username: ${user.username} | Rol: ${user.rol}</span>
+                            <button onclick="deleteUser(${user.id})">Eliminar</button>
+                        `;
+                        userSection.appendChild(listItem);
+                    });
                 } else {
-                    item.style.display = 'none';
+                    console.error('Error: No se pudo obtener la lista de usuarios.');
                 }
-            });
+            })
+            .catch(error => console.error('Error al obtener usuarios:', error));
+        }
+
+        
+
+        // Llamar a fetchUsers al cargar la página
+        window.onload = function() {
+            fetchUsers(); // Cargar todos los usuarios al inicio
         }
     </script>
 </head>
@@ -138,18 +156,7 @@ if (!isset($_SESSION['user'])) {
             </div>
             
             <ul class="user-list">
-                <li>
-                    <span>Username: user1 | Rol: admin</span>
-                    <button onclick="deleteUser(1)">Eliminar</button>
-                </li>
-                <li>
-                    <span>Username: user2 | Rol: editor</span>
-                    <button onclick="deleteUser(2)">Eliminar</button>
-                </li>
-                <li>
-                    <span>Username: user3 | Rol: viewer</span>
-                    <button onclick="deleteUser(3)">Eliminar</button>
-                </li>
+                
             
             </ul>
         </div>
