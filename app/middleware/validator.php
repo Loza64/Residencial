@@ -13,7 +13,7 @@ function validateSignUp($post)
 {
     $errors = [];
 
-    if (!preg_match('/^[a-zA-ZÁ-ÿ0-9]{4,40}$/', $post["username"])) {
+    if (!preg_match('/^[a-zA-ZÁ-ÿ0-9]{4,13}$/', $post["username"])) {
         $errors["username"] = "Please input a valid username.";
     }
 
