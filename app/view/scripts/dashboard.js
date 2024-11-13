@@ -80,7 +80,7 @@ async function fetchUsers(searchTerm = '') {
     } else if (response.status === 404) {
         alert(result.message)
         fetchUsers();
-    }else if (response.status === 404) {
+    }else if (response.status === 400) {
         alert(result.message.parameter)
     }
     else {
