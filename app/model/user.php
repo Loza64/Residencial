@@ -120,7 +120,8 @@ class User extends Database
         $user = [];
         try {
             $con = $this->getConnection();
-            $stmt = $con->prepare("select  id, username, email , rol from users where username like concat('%',:search,'%')");
+            $stmt = $con->prepare("select id ,username, email, rol from users where username like concat('%',:search,'%') and rol != 's_admin'"
+            );
             $stmt->bindParam(":search", $search);
             $stmt->execute();
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
