@@ -120,7 +120,8 @@ class User extends Database
         $user = [];
         try {
             $con = $this->getConnection();
-            $stmt = $con->prepare("select id ,username, email, rol from users where username like concat('%',:search,'%') and rol != 's_admin'"
+            $stmt = $con->prepare(
+                "select id ,username, email, rol from users where username like concat('%',:search,'%') and rol != 's_admin'"
             );
             $stmt->bindParam(":search", $search);
             $stmt->execute();
@@ -137,6 +138,19 @@ class User extends Database
         } catch (\Throwable $th) {
             error_log($th->getMessage());
             throw new Exception("Error to get user list");
+        }
+    }
+
+    public function deleteById(int $id): bool
+    {
+        try {
+            $con = $this->getConnection();
+            $stmt = $con->prepare("DELETE FROM users WHERE id = :iduser");
+            $stmt->bindValue(':iduser', $id, PDO::PARAM_INT);
+            return $stmt->execute();
+        } catch (\PDOException $ex) {
+            error_log("Error deleting user: " . $ex->getMessage());
+            throw new Exception("Error deleting user.");
         }
     }
 }

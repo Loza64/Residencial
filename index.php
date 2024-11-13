@@ -1,86 +1,118 @@
-<?php
-require_once 'app/controller/controller.php';
-require_once 'app/config/settings.php';
-require_once 'app/request.php';
+<?php  
+require_once 'app/controller/controller.php';  
+require_once 'app/config/settings.php';  
+require_once 'app/request.php';  
+ 
+$config = new Settings();  
+if ($config->getMode() == "DEVELOPMENT") {  
+    ini_set('display_errors', 1);  
+    ini_set('display_startup_errors', 1);  
+    error_reporting(E_ALL);  
+}  
 
-$config = new Settings();
-if ($config->getMode() == "DEVELOPMENT") {
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
-}
+if (strcmp($_SERVER['REQUEST_URI'], '/residencial/') === 0) {  
+    header("Location: /residencial/public/login.php");  
+    exit();  
+}  
+ 
+header("Access-Control-Allow-Origin: {$config->getDomain()}");  
+header("Content-Type: application/json");  
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");  
+header("Access-Control-Allow-Credentials: true");
 
-if ($_SERVER['REQUEST_URI'] == '/residencial/') {
-    header("Location: /residencial/public/login.php");
-    exit();
-}
+function getPost()  
+{  
+    return ($_SERVER["CONTENT_TYPE"] === "application/json") ?  
+        json_decode(file_get_contents("php://input"), true) : $_POST;  
+}  
 
-header("Access-Control-Allow-Origin: *");
-header("Content-Type: application/json");
-header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+$controller = new Controller();  
 
+switch ($_SERVER["REQUEST_METHOD"]) {  
+    case 'POST':  
+        $post = getPost();  
+        handlePostRequest($_GET["action"] ?? null, $post, $controller);  
+        break;  
+    case 'GET':  
+        handleGetRequest($_GET["action"] ?? null, $controller);  
+        break;  
+    case 'DELETE':  
+        handleDeleteRequest($_GET["action"] ?? null, $controller);  
+        break;  
+    default:  
+        http_response_code(405);  
+        echo json_encode(["state" => false, "message" => "Method not allowed"]);  
+        break;  
+}  
 
-function getPost()
-{
-    return ($_SERVER["CONTENT_TYPE"] === "application/json") ?
-        json_decode(file_get_contents("php://input"), true) : $_POST;
-}
+function handlePostRequest($action, $post, Controller $controller)  
+{  
+    if (empty($action)) {  
+        http_response_code(400);  
+        echo json_encode(["state" => false, "message" => "Action is required"]);  
+        return;  
+    }  
 
-$controller = new Controller();
+    switch ($action) {  
+        case "login":  
+            authenticateUser($post, $controller);  
+            break;  
+        case "signup":  
+            registerUser($post, $controller);  
+            break;  
+        case "contact":  
+            saveContact($post, $controller);  
+            break;  
+        default:  
+            http_response_code(404);  
+            echo json_encode(["state" => false, "message" => "Action not found"]);  
+            break;  
+    }  
+}  
 
-switch ($_SERVER["REQUEST_METHOD"]) {
-    case 'POST':
-        $post = getPost();
-        handlePostRequest($_GET["action"], $post, $controller);
-        break;
+function handleGetRequest($action, Controller $controller)  
+{  
+    if (empty($action)) {  
+        http_response_code(400);  
+        echo json_encode(["state" => false, "message" => "Action is required"]);  
+        return;  
+    }  
 
-    case 'GET':
-        handleGetRequest($_GET["action"], $controller);
-        break;
+    switch ($action) {  
+        case "logout":  
+            logout();  
+            break;  
+        case "redirect":  
+            redirect();  
+            break;  
+        case "users":  
+            getUserList($_GET["search"] ?? null, $controller);  
+            break;  
+        case "contacts":  
+            getListContacts($controller);  
+            break;  
+        default:  
+            http_response_code(404);  
+            echo json_encode(["state" => false, "message" => "Action not found"]);  
+            break;  
+    }  
+}  
 
-    default:
-        errorResponse(405, "Method Not Allowed");
-        break;
-}
+function handleDeleteRequest($action, Controller $controller)  
+{  
+    if (empty($action)) {  
+        http_response_code(400);  
+        echo json_encode(["state" => false, "message" => "Action is required"]);  
+        return;  
+    }  
 
-function handlePostRequest($action, $post, $controller)
-{
-    switch ($action) {
-        case "login":
-            authenticateUser($post, $controller);
-            break;
-
-        case "signup":
-            registerUser($post, $controller);
-            break;
-
-        case "contact":
-            saveContact($post, $controller);
-            break;
-
-        default:
-            errorResponse(404, "Action not found");
-            break;
-    }
-}
-
-function handleGetRequest($action, Controller $controller)
-{
-    switch ($action) {
-        case "logout":
-            logout();
-            break;
-
-        case "redirect":
-            redirect();
-            break;
-
-        case "getusers":
-            getUserList($_GET["search"], $controller);
-            break;
-
-        default:
-            errorResponse(404, "Action not found");
-            break;
-    }
+    switch ($action) {  
+        case "deleteduser":  
+            deleteUser($_GET["id"] ?? 0, $controller);
+            break;  
+        default:  
+            http_response_code(404);  
+            echo json_encode(["state" => false, "message" => "Action not found"]);  
+            break;  
+    }  
 }

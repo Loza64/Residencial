@@ -1,132 +1,166 @@
-<?php
-require_once './app/middleware/validator.php';
-require_once './app/model/user.php';
+<?php  
+require_once './app/middleware/validator.php';  
+require_once './app/model/user.php';  
+ 
+function userSession(): ?User  
+{  
+    session_start();  
+    if (isset($_SESSION['user'])) {  
+        $user = $_SESSION['user'];  
+        return new User(  
+            $user["id"],  
+            $user["username"],  
+            $user["email"],  
+            null,  
+            $user["rol"]  
+        );  
+    }  
+    return null;  
+}  
+  
+function sendJsonResponse(int $status, $data)  
+{  
+    http_response_code($status);  
+    echo json_encode($data);  
+}  
+ 
+function authenticateUser($post, Controller $controller)  
+{  
+    $errors = validateLogin($post);  
+    if (!empty($errors)) {  
+        sendJsonResponse(400, ["state" => false, "message" => $errors]);  
+    } else {  
+        $controller->login($post["email"], $post["pass"]);  
+    }  
+}  
+ 
+function registerUser($post, Controller $controller)  
+{  
+    $errors = validateSignUp($post);  
+    if (!empty($errors)) {  
+        sendJsonResponse(400, ["state" => false, "message" => $errors]);  
+    } else {  
+        $user = new User(null, $post["username"], $post["email"], $post["pass"]);  
+         $controller->signUp($user);  
+    }  
+}  
+ 
+function saveContact($post, Controller $controller)  
+{  
+    $user = userSession();  
+    if (!$user) {  
+        sendJsonResponse(401, ["state" => false, "message" => "Your session has expired."]);  
+        return;  
+    }  
 
-function userSession(): ?User
-{
-    session_start();
-    if (isset($_SESSION['user'])) {
-        $user = $_SESSION['user'];
-        return new User(
-            $user["id"],
-            $user["username"],
-            $user["email"],
-            null,
-            $user["rol"]
-        );
-    } else {
-        return null;
-    }
-}
+    $errors = validateContact($post);  
+    if (!empty($errors)) {  
+        sendJsonResponse(400, ["state" => false, "message" => $errors]);  
+        return;  
+    }  
 
-//Post
-function authenticateUser($post, Controller $controller)
-{
-    $errors = validateLogin($post);
-    if (!empty($errors)) {
-        errorResponse(400, $errors);
-    } else {
-        echo $controller->login($post["email"], $post["pass"]);
-    }
-}
+    $contact = new Contact(  
+        null,  
+        $user->getId(),  
+        $post["name"],  
+        new DateTime($post["birth"]),  
+        $post["dui"],  
+        $post["email"],  
+        $post["phone"],  
+        $post["address"],  
+        $post["occupation"],  
+        (float)$post["income"],  
+        (int)$post["family_members"],  
+        $post["reason_interest"],  
+        $post["personal_reference"],  
+        new DateTime($post["application_date"])  
+    );  
+    $controller->newContact($contact);  
+}  
+  
+function logout()  
+{  
+    session_start();  
+    session_destroy();  
+    header('Location: /residencial/public/login.php');  
+    exit;  
+}  
+  
+function redirect()  
+{  
+    $user = userSession();  
+    if ($user) {  
+        $role = $user->getRol();  
+        switch ($role) {  
+            case "resident":  
+            case "s_admin":  
+            case "admin":  
+                header('Location: /residencial/app/view/inicio.php');  
+                break;  
+            default:  
+                header('Location: ./view/error.php');  
+                break;  
+        }  
+    } else {  
+        header('Location: /residencial/public/login.php');  
+    }  
+    exit;  
+}  
+  
+function getUserList(?string $search, Controller $controller)  
+{  
+    $user = userSession();  
+    if (!$user) {  
+        sendJsonResponse(401, ["state" => false, "message" => "Your session has expired."]);  
+        return;  
+    }  
 
-function registerUser($post, Controller $controller)
-{
-    $errors = validateSignUp($post);
-    if (!empty($errors)) {
-        errorResponse(400, $errors);
-    } else {
-        $user = new User(null, $post["username"], $post["email"], $post["pass"]);
-        echo $controller->signUp($user);
-    }
-}
+    $errors = validateParameter($search);  
+    if (!empty($errors)) {  
+        sendJsonResponse(400, ["state" => false, "message" => $errors["parameter"]]);  
+        return;  
+    }  
 
-function saveContact($post, Controller $controller)
-{
+    if ($user->getRol() === "s_admin") {  
+        $controller->getUserList($search);  
+    } else {  
+        sendJsonResponse(401, ["state" => false, "message" => "You are not granted permission for this request."]);  
+    }  
+}  
+  
+function deleteUser(int $id, Controller $controller)  
+{  
+    $user = userSession();  
+    if (!$user) {  
+        sendJsonResponse(401, ["state" => false, "message" => "Your session has expired."]);  
+        return;  
+    }  
 
-    $user = userSession();
-    if ($user) {
-        $errors = validateContact($post);
-        if (!empty($errors)) {
-            errorResponse(400, $errors);
-        } else {
-            $contact = new Contact(
-                null,
-                $user->getId(),
-                $post["name"],
-                new DateTime($post["birth"]),
-                $post["dui"],
-                $post["email"],
-                $post["phone"],
-                $post["address"],
-                $post["occupation"],
-                (float)$post["income"],
-                (int)$post["family_members"],
-                $post["reason_interest"],
-                $post["personal_reference"],
-                new DateTime($post["application_date"])
-            );
-            $controller->newContact($contact);
-        }
-    } else {
-        http_response_code(401);
-        echo json_encode(["state" => false, "message" => "Your session has been  expired."]);
-    }
-}
+    $errors = validateParameterInt($id);  
+    if (!empty($errors)) {  
+        sendJsonResponse(400, ["state" => false, "message" => $errors["parameter"]]);  
+        return;  
+    }  
 
+    if ($user->getRol() === "s_admin") {  
+        $controller->deleteUser($id);  
+    } else {  
+        sendJsonResponse(401, ["state" => false, "message" => "You are not granted permission for this request."]);  
+    }  
+}  
 
-//Get
-function logout()
-{
-    session_start();
-    session_destroy();
-    header('Location: /residencial/public/login.php');
-}
+  
+function getListContacts(Controller $controller)  
+{  
+    $user = userSession();  
+    if (!$user) {  
+        sendJsonResponse(401, ["state" => false, "message" => "Your session has expired."]);  
+        return;  
+    }  
 
-function redirect()
-{
-    $user = userSession();
-    if ($user != null) {
-        $role = $user->getRol();
-        if ($role === "resident" || $role === "s_admin" || $role === "admin") {
-            header('Location: /residencial/app/view/inicio.php');
-            exit;
-        }
-
-        header('Location: ./view/error.php');
-        exit;
-    } else {
-        header('Location: /residencial/public/login.php');
-        exit;
-    }
-}
-
-function getUserList(?string $search, Controller $controller)
-{
-    $user = userSession();
-    if ($user) {
-        $errors = validateParameter($search);
-        if (!empty($errors)) {
-            http_response_code(400);
-            echo json_encode(["state" => false, "message" => $errors]);
-        } else {
-            if ($user->getRol() === "s_admin") {
-                $controller->getUserList($search);
-            } else {
-                http_response_code(401);
-                echo json_encode(["state" => false, "message" => "Your not granted permission to this request "]);
-            }
-        }
-    } else {
-        http_response_code(401);
-        echo json_encode(["state" => false, "message" => "Your session has been  expired."]);
-    }
-}
-
-//Error
-function errorResponse($code, $message)
-{
-    http_response_code($code);
-    echo json_encode(["state" => false, "message" => $message]);
-    exit();
+    if ($user->getRol() === "s_admin" || $user->getRol() === "admin") {  
+        $controller->getListContacts();  
+    } else {  
+        sendJsonResponse(401, ["state" => false, "message" => "You are not granted permission for this request."]);  
+    }  
 }

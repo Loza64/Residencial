@@ -1,14 +1,14 @@
-<?php 
+<?php
 
 session_start();
 if (!isset($_SESSION['user'])) {
     header('Location: ../../public/login.php');
 } else {
     if ($_SESSION['user']["rol"] != "admin" && $_SESSION['user']["rol"] != "s_admin") {
-       header('Location: inicio.php');
+        header('Location: inicio.php');
     }
 }
-?> 
+?>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -25,11 +25,13 @@ if (!isset($_SESSION['user'])) {
     <header>
         <h2 class="logo">Residencial San Francisco</h2>
         <nav class="navigation">
-            <?php 
-            if($_SESSION["user"]["rol"]==="s_admin"){
+            <a href="#" onclick="window.location.href='inicio.php'">Inicio</a>
+            <?php
+            if ($_SESSION["user"]["rol"] === "s_admin") {
                 echo '<a href="#" onclick="showSection(\'user-section\')">Usuarios</a>';
             }
             ?>
+            <a href="#" onclick="window.location.href='contact.php'">Contacto</a>
             <a href="#" onclick="showSection('request-section')" class="active">Solicitudes</a>
             <a href="#" onclick="window.location.href='http://localhost/residencial/?action=logout'">Cerrar Sesión</a>
         </nav>
@@ -40,16 +42,6 @@ if (!isset($_SESSION['user'])) {
         <div class="form-box contact" id="request-section">
             <h2>Solicitudes</h2>
             <div class="card-container">
-                <div class="card" onclick="openCardDetails('Juan Pérez', '01234567-8', 'juan.perez@example.com', '7890-1234', 'Calle Falsa 123', 'Ingeniero', '1200', '4', 'Seguridad y tranquilidad', 'Ana López, 7654-3210, Amiga', '2024-11-01')">
-                    <p><strong>Nombre:</strong> Juan Pérez</p>
-                    <p><strong>DUI:</strong> 01234567-8</p>
-                    <p><strong>Email:</strong> juan.perez@example.com</p>
-                </div>
-                <div class="card" onclick="openCardDetails('María García', '98765432-1', 'maria.garcia@example.com', '6543-2109', 'Av. Principal 456', 'Contadora', '1500', '3', 'Cercanía al trabajo', 'Carlos Rivas, 6789-0123, Hermano', '2024-11-02')">
-                    <p><strong>Nombre:</strong> María García</p>
-                    <p><strong>DUI:</strong> 98765432-1</p>
-                    <p><strong>Email:</strong> maria.garcia@example.com</p>
-                </div>
                 
             </div>
         </div>
@@ -59,14 +51,13 @@ if (!isset($_SESSION['user'])) {
             <h2>Lista de Usuarios</h2>
 
             <div class="search-box">
-                <input 
-                    type="text" 
-                    id="userSearch" 
+                <input
+                    type="text"
+                    id="userSearch"
                     placeholder="Buscar por username..."
-                    onkeyup="filterUsers()"
-                >
+                    onkeyup="filterUsers()">
             </div>
-            
+
             <ul class="user-list"></ul>
         </div>
     </div>
@@ -74,4 +65,3 @@ if (!isset($_SESSION['user'])) {
 </body>
 
 </html>
-

@@ -37,8 +37,11 @@ document.getElementById("login").addEventListener('submit', async (e) => {
     if (response.status === 200) {
         alert(result.message);
         window.location.href = 'http://localhost/residencial/?action=redirect';
-    } else {
-        alert(JSON.stringify({ code: response.status, ...result }))
+    } else if (response.status === 400) {
+        alert(`Error ${response.status}: ${JSON.stringify(result.message)}`)
+    }
+    else {
+        alert(`Error ${response.status}: ${result.message}`)
     }
 });
 
@@ -60,8 +63,11 @@ document.getElementById("signup").addEventListener("submit", async (e) => {
 
     if (response.status === 201) {
         alert(result.message)
-    } else {
-        alert(JSON.stringify({ code: response.status, ...result }))
+    } else if (response.status === 400) {
+        alert(`Error ${response.status}: ${JSON.stringify(result.message)}`)
+    }
+    else {
+        alert(`Error ${response.status}: ${result.message}`)
     }
 
 })
