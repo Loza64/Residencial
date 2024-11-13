@@ -58,7 +58,13 @@ async function fetchUsers(searchTerm = '') {
 function openCardDetails(contact) {
     const {user, name, dui, email, phone, address, occupation, income, family_members, reason_interest, personal_reference, application_date  } = contact; 
 
-    const detailsWindow = window.open("", "_blank", "width=400,height=600");
+    const width = 400;  
+    const height = 600;  
+     
+    const left = (window.innerWidth / 2) - (width / 2);  
+    const top = (window.innerHeight / 2) - (height / 2);  
+
+    const detailsWindow = window.open("", "_blank", `width=${width},height=${height},top=${top},left=${left}`); 
     detailsWindow.document.write(`  
         <html>  
             <head>  
