@@ -79,7 +79,6 @@ async function fetchUsers(searchTerm = '') {
         alert(result.message)
     } else if (response.status === 404) {
         alert(result.message)
-        fetchUsers();
     }else if (response.status === 400) {
         alert(result.message.parameter)
     }
