@@ -78,8 +78,13 @@ async function fetchUsers(searchTerm = '') {
     } else if (response.status === 401) {
         alert(result.message)
     } else if (response.status === 404) {
-        alert(result.message)
-    }else if (response.status === 400) {
+        if (searchTerm === '') {
+            alert(result.message)
+        } else {
+            alert(result.message)
+            fetchUsers();
+        }
+    } else if (response.status === 400) {
         alert(result.message.parameter)
     }
     else {
