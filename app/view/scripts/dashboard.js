@@ -52,8 +52,10 @@ function deleteUser(userId) {
 }
 
 document.getElementById('userSearch').addEventListener('keyup', (e) => {
-    const search = e.target.value;
-    fetchUsers(search);
+    if (e.key === 'Enter') {
+        const search = e.target.value;
+        fetchUsers(search);
+    }
 })
 
 // Función para obtener usuarios desde la URL usando AJAX
@@ -75,7 +77,7 @@ async function fetchUsers(searchTerm = '') {
         });
     } else if (response.status === 401) {
         alert(result.message)
-    } else if(response.status === 404){
+    } else if (response.status === 404) {
         alert(result.message)
         fetchUsers();
     }
