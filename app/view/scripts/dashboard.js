@@ -92,6 +92,40 @@ async function fetchUsers(searchTerm = '') {
     }
 }
 
+async function fetchContacts() {  
+    const card_container = document.querySelector(".card-container"); // Asegúrate de que esto esté correcto  
+
+    try {  
+        const response = await fetch('http://localhost/residencial/?action=listcontacts');  
+        const result = await response.json();  
+
+        if (response.status === 200) {  
+            const contacts = result.contacts;  
+            contacts.forEach((item) => {  
+                const div = document.createElement('div');  
+                div.className = "card";  
+                div.dataset.id = item.id;
+                div.innerHTML = `  
+                <p><strong>Nombre:</strong> ${item.name}</p>  
+                <p><strong>DUI:</strong> ${item.dui}</p>  
+                <p><strong>Teléfono:</strong> ${item.phone}</p>  
+                <p><strong>Dirección:</strong> ${item.address}</p>  
+                `;  
+                card_container.appendChild(div);  
+            });  
+        } else {  
+            console.error('Error al obtener contactos:', response.status);  
+        }  
+    } catch (error) {  
+        console.error('Error en la solicitud:', error);  
+    }  
+}  
+
+// Llama a la función para que se ejecute.  
+fetchContacts();
+
 window.onload = function () {
     fetchUsers();
+    fetchContacts();
 }
+

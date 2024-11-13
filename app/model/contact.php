@@ -163,37 +163,49 @@ class Contact extends Database
         }
     }
 
-    public function getContactByUserId(int $iduser): ?Contact  
-{  
-    try {  
-        $con = $this->getConnection();  
-        $stmt = $con->prepare("SELECT * FROM contact WHERE id_user = :iduser");  
-        $stmt->bindParam(":iduser", $iduser);  
-        $stmt->execute();  
-        $response = $stmt->fetch(PDO::FETCH_ASSOC);  
-        if ($response) {  
-            return new Contact(  
-                $response["id"],  
-                $response["id_user"],  
-                $response["name"],  
-                new DateTime($response["birth"]), 
-                $response["dui"],  
-                $response["email"],  
-                $response["phone"],  
-                $response["address"],  
-                $response["occupation"],
-                $response["income"],  
-                $response["family_members"],  
-                $response["reason_interest"],  
-                $response["personal_reference"],  
-                new DateTime($response["application_date"]) 
-            );  
-        } else {  
-            return null;  
-        }  
-    } catch (\Throwable $th) {  
-        error_log("Error to get info: " . $th->getMessage());  
-        throw new Exception("Error to get info: " . $th->getMessage());  
-    }  
-}
+    public function getContactByUserId(int $iduser): ?Contact
+    {
+        try {
+            $con = $this->getConnection();
+            $stmt = $con->prepare("SELECT * FROM contact WHERE id_user = :iduser");
+            $stmt->bindParam(":iduser", $iduser);
+            $stmt->execute();
+            $response = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($response) {
+                return new Contact(
+                    $response["id"],
+                    $response["id_user"],
+                    $response["name"],
+                    new DateTime($response["birth"]),
+                    $response["dui"],
+                    $response["email"],
+                    $response["phone"],
+                    $response["address"],
+                    $response["occupation"],
+                    $response["income"],
+                    $response["family_members"],
+                    $response["reason_interest"],
+                    $response["personal_reference"],
+                    new DateTime($response["application_date"])
+                );
+            } else {
+                return null;
+            }
+        } catch (\Throwable $th) {
+            error_log("Error to get info: " . $th->getMessage());
+            throw new Exception("Error to get info: " . $th->getMessage());
+        }
+    }
+
+    public function getListContacts(){
+        try {
+            $con = $this->getConnection();
+            $stmt = $con->prepare("select c.id,ifnull(u.username,'deleted') as user,c.name,c.birth,c.dui,c.email,c.phone,c.address,c.occupation,c.income,c.family_members,c.reason_interest,c.personal_reference,c.application_date from contact c left join users u on u.id = c.id_user");
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (\Throwable $th) {
+            error_log("Error to get info: " . $th->getMessage());
+            throw new Exception("Error to get info: " . $th->getMessage());
+        }
+    }
 }

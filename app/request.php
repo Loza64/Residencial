@@ -24,7 +24,8 @@ function authenticateUser($post, Controller $controller)
 {
     $errors = validateLogin($post);
     if (!empty($errors)) {
-        errorResponse(400, $errors);
+        http_response_code(400);
+        echo json_encode(["state" => false, "message" => $errors]);
     } else {
         echo $controller->login($post["email"], $post["pass"]);
     }
@@ -34,7 +35,8 @@ function registerUser($post, Controller $controller)
 {
     $errors = validateSignUp($post);
     if (!empty($errors)) {
-        errorResponse(400, $errors);
+        http_response_code(400);
+        echo json_encode(["state" => false, "message" => $errors]);
     } else {
         $user = new User(null, $post["username"], $post["email"], $post["pass"]);
         echo $controller->signUp($user);
@@ -43,12 +45,12 @@ function registerUser($post, Controller $controller)
 
 function saveContact($post, Controller $controller)
 {
-
     $user = userSession();
     if ($user) {
         $errors = validateContact($post);
         if (!empty($errors)) {
-            errorResponse(400, $errors);
+            http_response_code(400);
+            echo json_encode(["state" => false, "message" => $errors]);
         } else {
             $contact = new Contact(
                 null,
@@ -123,10 +125,18 @@ function getUserList(?string $search, Controller $controller)
     }
 }
 
-//Error
-function errorResponse($code, $message)
+function getListContacts(Controller $controller)
 {
-    http_response_code($code);
-    echo json_encode(["state" => false, "message" => $message]);
-    exit();
+    $user = userSession();
+    if ($user) {
+        if ($user->getRol() === "s_admin" || $user->getRol() === "admin") {
+            $controller->getListContacts();
+        } else {
+            http_response_code(401);
+            echo json_encode(["state" => false, "message" => "Your not granted permission to this request "]);
+        }
+    } else {
+        http_response_code(401);
+        echo json_encode(["state" => false, "message" => "Your session has been  expired."]);
+    }
 }
