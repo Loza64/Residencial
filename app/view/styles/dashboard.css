@@ -59,7 +59,7 @@ header{
     transition: transform .5s;
 }
 
-.navigation  a.soli::after{
+.navigation a.active::after{
     transform-origin: left;
     transform: scaleX(1);
 }
@@ -108,3 +108,120 @@ header{
     text-align: center;
 }
 
+.wrapper {
+    position: relative;
+    width: 1150px;
+    max-height: 80vh; 
+    background: transparent;
+    border: 2px solid #2c3e50;
+    border-radius: 20px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 30px rgba(0,0,0,.5);
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: center;
+    align-items: flex-start; 
+    overflow-y: auto; 
+    padding: 20px; 
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.card {
+    width: 250px;
+    padding: 15px;
+    background-color: rgba(44, 62, 80, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    color: #FFFFFF;
+}
+
+.card:hover {
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.user-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+}
+
+.user-list li {
+    width: 250px;
+    padding: 15px;
+    background-color: rgba(44, 62, 80, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.user-list li:hover {
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.user-list span {
+    word-break: break-word;
+}
+
+.user-list button {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+.user-list button:hover {
+    background-color: #c0392b;
+}
+
+.search-box {
+    width: 100%;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.search-box input {
+    width: 100%;
+    max-width: 400px;
+    padding: 12px 20px;
+    border: 2px solid #2c3e50;
+    border-radius: 10px;
+    font-size: 1em;
+    color: #2c3e50;
+    background: rgba(255, 255, 255, 0.9);
+    transition: all 0.3s ease;
+}
+
+.search-box input:focus {
+    outline: none;
+    box-shadow: 0 0 10px rgba(44, 62, 80, 0.3);
+    background: rgba(255, 255, 255, 1);
+}
+
+.search-box input::placeholder {
+    color: #95a5a6;
+}
+
+
+.user-list li {
+    transition: all 0.3s ease;
+}

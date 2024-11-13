@@ -57,6 +57,33 @@ class Controller
         }
     }
 
+    function getUserList(?string $search)
+    {
+        try {
+            $list = $this->userDao->getUserList($search);
+            if (count($list) >= 1) {
+                $jsonList = array_map(function ($item) {
+                    return [
+                        'id' => $item->getId(),
+                        'username' => $item->getUsername(),
+                        'email' => $item->getEmail(),
+                        'rol' => $item->getRol()
+                    ];
+                }, $list);
+                http_response_code(200);
+                echo json_encode(["state" => true, "users" => $jsonList]);
+            } else {
+                http_response_code(404);
+                echo json_encode(["state" => false, "message" => "No users found for the provided search"]);
+            }
+        } catch (\Throwable $th) {
+            http_response_code(500);
+            echo json_encode(["state" => false, "message" => "An error occurred."]);
+            error_log($th->getMessage());
+        }
+    }
+
+
     function newContact(Contact $contact)
     {
         try {

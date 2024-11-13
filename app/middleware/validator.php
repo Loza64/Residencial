@@ -1,4 +1,14 @@
 <?php
+
+function validateParameter($get)
+{
+    $errors = [];
+    if (!preg_match('/^[a-zA-ZÁ-ÿ0-9]{0,40}$/', $get)) {
+        $errors["parameter"] = "Please input a valid data";
+    }
+    return $errors;
+}
+
 function validateSignUp($post)
 {
     $errors = [];
