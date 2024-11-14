@@ -115,8 +115,8 @@ function openCardDetails(contact) {
 }
 
 async function updateUserStatus(userId, status, contactId) {
-    const response = await fetch(`http://localhost/residencial/?action=updateStatus&id=${userId}&status=${status}`, {
-        method: 'POST'
+    const response = await fetch(`http://localhost/residencial/?action=updateuser&id=${userId}&state=${status}`, {
+        method: 'PATCH'
     });
     const result = await response.json();
 
@@ -144,7 +144,7 @@ document.getElementById('contactSearch').addEventListener('keyup', (e) => {
 
 async function fetchContacts(searchTerm = '') {
     const card_container = document.querySelector(".card-container");
-    card_container.innerHTML = ''; // Limpiar buscador 
+    card_container.innerHTML = '';
 
     const response = await fetch(`http://localhost/residencial/?action=contacts&search=${searchTerm}`);
     const result = await response.json();
@@ -168,15 +168,19 @@ async function fetchContacts(searchTerm = '') {
             card_container.appendChild(div);
         });
     } else if (response.status === 401) {
-        alert(result.message);
+        alert(result.message)
+    } else if (response.status === 404) {
+        if (searchTerm === '') {
+            alert(result.message)
+        } else {
+            alert(result.message)
+            fetchUsers();
+        }
+    } else if (response.status === 400) {
+        alert(result.message)
     } else {
-        alert(`Error ${response.status}: ${result.message}`);
+        alert(`Error ${response.status}: ${result.message}`)
     }
-}
-
-function filterContacts() {
-    const searchTerm = document.getElementById('contactSearch').value;
-    fetchContacts(searchTerm);
 }
 
 window.onload = function () {

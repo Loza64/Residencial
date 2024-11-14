@@ -121,7 +121,7 @@ class Controller
         try {
             $response = $this->userDao->updateState($id, $state);
             if ($response) {
-                $this->jsonResponse(["state" => true, "message" => "User state update succes."], 201);
+                $this->jsonResponse(["state" => true, "message" => "User state update succes."], 200);
             } else {
                 $this->jsonResponse(["state" => false, "message" => "Could not update user state."], 404);
             }
