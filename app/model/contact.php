@@ -197,15 +197,22 @@ class Contact extends Database
         }
     }
 
-    public function getListContacts(){
-        try {
-            $con = $this->getConnection();
-            $stmt = $con->prepare("select c.id,ifnull(u.username,'deleted') as user,c.name,c.birth,c.dui,c.email,c.phone,c.address,c.occupation,c.income,c.family_members,c.reason_interest,c.personal_reference,c.application_date from contact c left join users u on u.id = c.id_user");
-            $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (\Throwable $th) {
-            error_log("Error to get info: " . $th->getMessage());
-            throw new Exception("Error to get info: " . $th->getMessage());
+    public function getListContacts(string $search){
+        try {  
+            $con = $this->getConnection();  
+            $stmt = $con->prepare("SELECT c.id, IFNULL(u.username, 'deleted') AS user, c.name, c.birth,   
+                c.dui, c.email, c.phone, c.address, c.occupation, c.income,   
+                c.family_members, c.reason_interest, c.personal_reference, c.application_date   
+                FROM contact c   
+                LEFT JOIN users u ON u.id = c.id_user   
+                WHERE u.username LIKE CONCAT('%', :search, '%')");  
+            $stmt->bindParam(":search", $search);  
+            $stmt->execute();  
+            
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);  
+        } catch (\Throwable $th) {  
+            error_log("Error retrieving contact information: " . $th->getMessage());  
+            throw new Exception("An error occurred while fetching contacts."); // More generic message  
         }
     }
 }

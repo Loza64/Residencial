@@ -122,6 +122,33 @@ function getUserList(?string $search, Controller $controller)
     }
 }
 
+function updateStateUser(int $id, string $state, Controller $controller)
+{
+    $user = userSession();
+    if (!$user) {
+        sendJsonResponse(401, ["state" => false, "message" => "Your session has expired."]);
+        return;
+    }
+
+    $errorint = validateParameterInt($id);
+    if (!empty($errors)) {
+        sendJsonResponse(400, ["state" => false, "message" => $errorint["parameter"]]);
+        return;
+    }
+
+    $errorstring = validateParameter($state);
+    if (!empty($errors)) {
+        sendJsonResponse(400, ["state" => false, "message" => $errorstring["parameter"]]);
+        return;
+    }
+
+    if ($user->getRol() === "s_admin") {
+        $controller->updateStateUser($id, $state);
+    } else {
+        sendJsonResponse(401, ["state" => false, "message" => "You are not granted permission for this request."]);
+    }
+}
+
 function deleteUser(int $id, Controller $controller)
 {
     $user = userSession();
@@ -144,7 +171,7 @@ function deleteUser(int $id, Controller $controller)
 }
 
 
-function getListContacts(Controller $controller)
+function getListContacts(string $search, Controller $controller)
 {
     $user = userSession();
     if (!$user) {
@@ -152,8 +179,14 @@ function getListContacts(Controller $controller)
         return;
     }
 
+    $errorstring = validateParameter($search);
+    if (!empty($errors)) {
+        sendJsonResponse(400, ["state" => false, "message" => $errorstring["parameter"]]);
+        return;
+    }
+
     if ($user->getRol() === "s_admin" || $user->getRol() === "admin") {
-        $controller->getListContacts();
+        $controller->getListContacts($search);
     } else {
         sendJsonResponse(401, ["state" => false, "message" => "You are not granted permission for this request."]);
     }
