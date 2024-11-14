@@ -12,7 +12,7 @@ function validateParameter($get)
 function validateParameterInt($get)
 {
     $errors = [];
-    if (!filter_var($get, FILTER_VALIDATE_INT) || $get < 0) {
+    if (!filter_var($get, FILTER_VALIDATE_INT) || $get <= 0) {
         $errors["parameter"] = "Please input a valid data.";
     }
     return $errors;
