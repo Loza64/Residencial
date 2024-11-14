@@ -63,27 +63,28 @@ async function fetchUsers(searchTerm = '') {
     }
 }
 
+let detailsWindow = null;
+
 function openCardDetails(contact) {
     const { idcontact, user, iduser, name, dui, email, phone, address, occupation, income, family_members, reason_interest, personal_reference, application_date } = contact;
 
     const width = 400;
     const height = 650;
-
     const left = (window.innerWidth / 2) - (width / 2);
     const top = (window.innerHeight / 2) - (height / 2);
 
-    const detailsWindow = window.open("", "_blank", `width=${width},height=${height},top=${top},left=${left}`);
+    // Cerrar la ventana anterior 
+    if (detailsWindow && !detailsWindow.closed) {
+        detailsWindow.close();
+    }
+
+    detailsWindow = window.open("", "_blank", `width=${width},height=${height},top=${top},left=${left}`);
     detailsWindow.document.write(`  
         <html>  
             <head>  
                 <title>Detalles de la Solicitud</title>  
                 <style>  
-                    body { font-family: 'Poppins', sans-serif;   
-                            padding: 20px;   
-                            line-height: 1.6;   
-                            background-color: #2c3e50;   
-                            color: #FFFFFF;  
-                        }  
+                    body { font-family: 'Poppins', sans-serif; padding: 20px; line-height: 1.6; background-color: #2c3e50; color: #FFFFFF; }  
                     h2 { color: #FFFFFF; }  
                     p { margin: 10px 0; }  
                     button { margin-top: 10px; padding: 10px; font-size: 16px; cursor: pointer; }
@@ -105,7 +106,6 @@ function openCardDetails(contact) {
                 <p><strong>Motivo de Interés:</strong> ${reason_interest}</p>  
                 <p><strong>Referencias:</strong> ${personal_reference}</p>  
                 <p><strong>Fecha de Aplicación:</strong> ${application_date}</p>  
-
                 <button class="accept-btn" onclick="window.opener.updateUserStatus(${iduser}, 'approved', ${contact.id})">ACEPTAR</button>  
                 <button class="deny-btn" onclick="window.opener.updateUserStatus(${iduser}, 'denied', ${contact.id})">DENEGAR</button>  
             </body>  
@@ -113,6 +113,7 @@ function openCardDetails(contact) {
     `);
     detailsWindow.document.close();
 }
+
 
 async function updateUserStatus(userId, status, contactId) {
     const response = await fetch(`http://localhost/residencial/?action=updateuser&id=${userId}&state=${status}`, {

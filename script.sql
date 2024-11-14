@@ -27,7 +27,7 @@ CREATE TABLE contact (
     reason_interest VARCHAR(350) NOT NULL,
     personal_reference VARCHAR(200) NOT NULL,
     application_date DATE NOT NULL,
-    CONSTRAINT fk_user FOREIGN KEY (id_user) REFERENCES users(id) ON DELETE SET NULL ON UPDATE CASCADE,
+    CONSTRAINT fk_user FOREIGN KEY (id_user) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT check_name CHECK (name REGEXP '^[a-zA-ZÁ-ÿ ]{3,40}$'), 
     CONSTRAINT check_dui CHECK (dui REGEXP '^[0-9]{8}-[0-9]{1}$'),
     CONSTRAINT check_email_contact CHECK (email REGEXP '^[\\w._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,10}$'),
