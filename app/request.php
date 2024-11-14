@@ -144,7 +144,7 @@ function updateStateUser(int $id, string $state, Controller $controller)
 
     if ($user->getRol() === "s_admin") {
         if ($user->getId() === $id) {
-            sendJsonResponse(402, ["state" => false, "message" => "You cant update your self."]);
+            sendJsonResponse(403, ["state" => false, "message" => "You cannot update your self."]);
         } else {
             $controller->updateStateUser($id, $state);
         }
