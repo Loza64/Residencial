@@ -64,7 +64,7 @@ async function fetchUsers(searchTerm = '') {
 }
 
 function openCardDetails(contact) {
-    const { id, user, name, dui, email, phone, address, occupation, income, family_members, reason_interest, personal_reference, application_date } = contact;
+    const { idcontact, user, iduser, name, dui, email, phone, address, occupation, income, family_members, reason_interest, personal_reference, application_date } = contact;
 
     const width = 400;
     const height = 650;
@@ -106,8 +106,8 @@ function openCardDetails(contact) {
                 <p><strong>Referencias:</strong> ${personal_reference}</p>  
                 <p><strong>Fecha de Aplicación:</strong> ${application_date}</p>  
 
-                <button class="accept-btn" onclick="window.opener.updateUserStatus(${id}, 'approved', ${contact.id})">ACEPTAR</button>  
-                <button class="deny-btn" onclick="window.opener.updateUserStatus(${id}, 'denied', ${contact.id})">DENEGAR</button>  
+                <button class="accept-btn" onclick="window.opener.updateUserStatus(${iduser}, 'approved', ${contact.id})">ACEPTAR</button>  
+                <button class="deny-btn" onclick="window.opener.updateUserStatus(${iduser}, 'denied', ${contact.id})">DENEGAR</button>  
             </body>  
         </html>  
     `);

@@ -118,7 +118,7 @@ function getUserList(?string $search, Controller $controller)
     if ($user->getRol() === "s_admin") {
         $controller->getUserList($search);
     } else {
-        sendJsonResponse(401, ["state" => false, "message" => "You are not granted permission for this request."]);
+        sendJsonResponse(403, ["state" => false, "message" => "You are not granted permission for this request."]);
     }
 }
 
@@ -143,9 +143,13 @@ function updateStateUser(int $id, string $state, Controller $controller)
     }
 
     if ($user->getRol() === "s_admin") {
-        $controller->updateStateUser($id, $state);
+        if ($user->getId() === $id) {
+            sendJsonResponse(402, ["state" => false, "message" => "You cant update your self."]);
+        } else {
+            $controller->updateStateUser($id, $state);
+        }
     } else {
-        sendJsonResponse(401, ["state" => false, "message" => "You are not granted permission for this request."]);
+        sendJsonResponse(403, ["state" => false, "message" => "You are not granted permission for this request."]);
     }
 }
 
@@ -164,9 +168,13 @@ function deleteUser(int $id, Controller $controller)
     }
 
     if ($user->getRol() === "s_admin") {
-        $controller->deleteUser($id);
+        if($user->getId() === $id){
+            sendJsonResponse(403, ["state" => false, "message" => "You cannot deleted your self."]);
+        }else{
+            $controller->deleteUser($id);
+        }
     } else {
-        sendJsonResponse(401, ["state" => false, "message" => "You are not granted permission for this request."]);
+        sendJsonResponse(403, ["state" => false, "message" => "You are not granted permission for this request."]);
     }
 }
 
@@ -188,6 +196,6 @@ function getListContacts(string $search, Controller $controller)
     if ($user->getRol() === "s_admin" || $user->getRol() === "admin") {
         $controller->getListContacts($search);
     } else {
-        sendJsonResponse(401, ["state" => false, "message" => "You are not granted permission for this request."]);
+        sendJsonResponse(403, ["state" => false, "message" => "You are not granted permission for this request."]);
     }
 }
