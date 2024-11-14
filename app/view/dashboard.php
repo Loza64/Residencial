@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 if (!isset($_SESSION['user'])) {
     header('Location: ../../public/login.php');
@@ -25,28 +24,24 @@ if (!isset($_SESSION['user'])) {
     <header>
         <h2 class="logo">Residencial San Francisco</h2>
         <nav class="navigation">
-            <a href="#" onclick="window.location.href='inicio.php'">Inicio</a>
             <?php
             if ($_SESSION["user"]["rol"] === "s_admin") {
                 echo '<a href="#" onclick="showSection(\'user-section\')">Usuarios</a>';
             }
             ?>
-            <a href="#" onclick="window.location.href='contact.php'">Contacto</a>
             <a href="#" onclick="showSection('request-section')" class="active">Solicitudes</a>
             <a href="#" onclick="window.location.href='http://localhost/residencial/?action=logout'">Cerrar Sesión</a>
         </nav>
     </header>
 
     <div class="wrapper">
-        <!-- Sección de Solicitudes -->
         <div class="form-box contact" id="request-section">
             <h2>Solicitudes</h2>
             <div class="card-container">
-                
+
             </div>
         </div>
 
-        <!-- Sección de Usuarios -->
         <div class="form-box users" id="user-section" style="display: none;">
             <h2>Lista de Usuarios</h2>
 

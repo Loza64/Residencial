@@ -3,9 +3,12 @@ session_start();
 if (!isset($_SESSION['user'])) {
   header('Location: ../../public/login.php');
 } else {
+  if ($_SESSION['user']["rol"] == "admin" || $_SESSION['user']["rol"] == "s_admin") {
+    header('Location: dashboard.php');
+  }
 }
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,13 +25,6 @@ if (!isset($_SESSION['user'])) {
     <div class="logo">Bienvenido <?php echo $_SESSION["user"]["username"] ?></div>
     <ul class="navigation">
       <a href="#" class="LP">Inicio</a>
-
-      <?php
-      if ($_SESSION["user"]["rol"] == "s_admin" || $_SESSION["user"]["rol"] == "admin") {
-        echo '<a href="dashboard.php">Dashboard</a>';
-      }
-      ?>
-
       <a href="#" onclick="window.location.href='contact.php'">Contacto</a>
       <a href="#" onclick="window.location.href='http://localhost/residencial/?action=logout'">Cerrar Sesión</a>
     </ul>
