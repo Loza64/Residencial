@@ -152,21 +152,15 @@ class User extends Database
 
     public function updateState(int $id, string $state): bool  
     {  
-        $validStates = ['approved', 'denied'];  
-        if (!in_array($state, $validStates)) {  
-            throw new InvalidArgumentException("Invalid state: " . $state);  
-        }  
-    
         try {  
             $con = $this->getConnection();  
             $stmt = $con->prepare("UPDATE users SET state = :state WHERE id = :id;");  
             $stmt->bindValue(':id', $id, PDO::PARAM_INT);  
             $stmt->bindValue(':state', $state);  
-    
             if ($stmt->execute()) {  
                 return true; 
             } else {  
-                throw new Exception("Could not update user with ID: " . $id);  
+                return false;
             }  
         } catch (\PDOException $ex) {  
             error_log("Error updating user state for ID " . $id . ": " . $ex->getMessage());  
