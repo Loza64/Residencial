@@ -37,6 +37,15 @@ if (!isset($_SESSION['user'])) {
     <div class="wrapper">
         <div class="form-box contact" id="request-section">
             <h2>Solicitudes</h2>
+
+            <div class="search-box">
+                <input
+                    type="text"
+                    id="contactSearch"
+                    placeholder="Buscar por usuario..."
+                    nkeyup="filterContacts()">
+            </div>
+
             <div class="card-container">
 
             </div>

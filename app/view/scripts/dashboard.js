@@ -64,10 +64,10 @@ async function fetchUsers(searchTerm = '') {
 }
 
 function openCardDetails(contact) {
-    const { user, name, dui, email, phone, address, occupation, income, family_members, reason_interest, personal_reference, application_date } = contact;
+    const { id, user, name, dui, email, phone, address, occupation, income, family_members, reason_interest, personal_reference, application_date } = contact;
 
     const width = 400;
-    const height = 600;
+    const height = 650;
 
     const left = (window.innerWidth / 2) - (width / 2);
     const top = (window.innerHeight / 2) - (height / 2);
@@ -86,6 +86,9 @@ function openCardDetails(contact) {
                         }  
                     h2 { color: #FFFFFF; }  
                     p { margin: 10px 0; }  
+                    button { margin-top: 10px; padding: 10px; font-size: 16px; cursor: pointer; }
+                    .accept-btn { background-color: #4CAF50; color: white; }
+                    .deny-btn { background-color: #f44336; color: white; }
                 </style>  
             </head>  
             <body>  
@@ -102,16 +105,48 @@ function openCardDetails(contact) {
                 <p><strong>Motivo de Interés:</strong> ${reason_interest}</p>  
                 <p><strong>Referencias:</strong> ${personal_reference}</p>  
                 <p><strong>Fecha de Aplicación:</strong> ${application_date}</p>  
+
+                <button class="accept-btn" onclick="window.opener.updateUserStatus(${id}, 'approved', ${contact.id})">ACEPTAR</button>  
+                <button class="deny-btn" onclick="window.opener.updateUserStatus(${id}, 'denied', ${contact.id})">DENEGAR</button>  
             </body>  
         </html>  
     `);
     detailsWindow.document.close();
 }
 
-async function fetchContacts() {
+async function updateUserStatus(userId, status, contactId) {
+    const response = await fetch(`http://localhost/residencial/?action=updateStatus&id=${userId}&status=${status}`, {
+        method: 'POST'
+    });
+    const result = await response.json();
 
+    if (response.status === 200) {
+        alert(result.message);
+
+        const card = document.querySelector(`.card[data-id="${contactId}"]`);
+        if (status === 'approved') {
+            card.style.backgroundColor = '#4CAF50'; // Verde para aprobado
+        } else if (status === 'denied') {
+            card.style.backgroundColor = '#f44336'; // Rojo para denegado
+        }
+    } else {
+        alert(`Error ${response.status}: ${result.message}`);
+    }
+}
+
+//Al presionar Enter, buscar formulario de contacto
+document.getElementById('contactSearch').addEventListener('keyup', (e) => {
+    if (e.key === 'Enter') {
+        const search = e.target.value;
+        fetchContacts(search);
+    }
+});
+
+async function fetchContacts(searchTerm = '') {
     const card_container = document.querySelector(".card-container");
-    const response = await fetch('http://localhost/residencial/?action=contacts');
+    card_container.innerHTML = ''; // Limpiar buscador 
+
+    const response = await fetch(`http://localhost/residencial/?action=contacts&search=${searchTerm}`);
     const result = await response.json();
 
     if (response.status === 200) {
@@ -137,6 +172,11 @@ async function fetchContacts() {
     } else {
         alert(`Error ${response.status}: ${result.message}`);
     }
+}
+
+function filterContacts() {
+    const searchTerm = document.getElementById('contactSearch').value;
+    fetchContacts(searchTerm);
 }
 
 window.onload = function () {
