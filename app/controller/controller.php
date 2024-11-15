@@ -29,7 +29,7 @@ class Controller
                 $this->jsonResponse(["state" => false, "message" => "Username or email is already used."], 409);
             }
         } catch (\Throwable $th) {
-            $this->jsonResponse(["state" => false, "message" => "An error occurred during signup."], 500);
+            $this->jsonResponse(["state" => false, "message" => "An error occurred during signup: " . $th->getMessage()], 500);
             error_log($th->getMessage());
         }
     }
@@ -57,7 +57,7 @@ class Controller
                 $this->jsonResponse(["state" => false, "message" => "Email or password incorrect."], 401);
             }
         } catch (\Throwable $th) {
-            $this->jsonResponse(["state" => false, "message" => "An error occurred during login."], 500);
+            $this->jsonResponse(["state" => false, "message" => "An error occurred during login: " . $th->getMessage()], 500);
             error_log($th->getMessage());
         }
     }
@@ -81,7 +81,7 @@ class Controller
                 $this->jsonResponse(["state" => false, "message" => "No users found."], 404);
             }
         } catch (\Throwable $th) {
-            $this->jsonResponse(["state" => false, "message" => "An error occurred."], 500);
+            $this->jsonResponse(["state" => false, "message" => "An error occurred: " . $th->getMessage()], 500);
             error_log($th->getMessage());
         }
     }
@@ -96,7 +96,7 @@ class Controller
                 $this->jsonResponse(["state" => false, "message" => "User not found or could not be deleted."], 404);
             }
         } catch (\Throwable $th) {
-            $this->jsonResponse(["state" => false, "message" => "An error occurred."], 500);
+            $this->jsonResponse(["state" => false, "message" => "An error occurred: " . $th->getMessage()], 500);
             error_log($th->getMessage());
         }
     }
@@ -111,7 +111,7 @@ class Controller
                 $this->jsonResponse(["state" => false, "message" => "You have already sent this contact form."], 409);
             }
         } catch (\Throwable $th) {
-            $this->jsonResponse(["state" => false, "message" => "An error occurred while sending the contact form."], 500);
+            $this->jsonResponse(["state" => false, "message" => "An error occurred while sending the contact form: " . $th->getMessage()], 500);
             error_log($th->getMessage());
         }
     }
@@ -126,7 +126,24 @@ class Controller
                 $this->jsonResponse(["state" => false, "message" => "Could not update user state."], 404);
             }
         } catch (\Throwable $th) {
-            $this->jsonResponse(["state" => false, "message" => "An error occurred while sending the contact form."], 500);
+            $this->jsonResponse(["state" => false, "message" => "An error occurred while sending the contact form: " . $th->getMessage()], 500);
+            error_log($th->getMessage());
+        }
+    }
+
+    public function updateProfile(int $id, string $user, string $email)
+    {
+        try {
+            $response = $this->userDao->updateProfile($id, $user, $email);
+            if ($response) {
+                $_SESSION["user"]["username"] = $user;
+                $_SESSION["user"]["email"] = $email;
+                $this->jsonResponse(["state" => true, "message" => "User state profile succes."], 200);
+            } else {
+                $this->jsonResponse(["state" => false, "message" => "Could not update profile."], 404);
+            }
+        } catch (\Throwable $th) {
+            $this->jsonResponse(["state" => false, "message" => "An error occurred while sending the contact form: " . $th->getMessage()], 500);
             error_log($th->getMessage());
         }
     }
@@ -141,7 +158,7 @@ class Controller
                 $this->jsonResponse(["state" => false, "message" => "No contacts found."], 404);
             }
         } catch (\Throwable $th) {
-            $this->jsonResponse(["state" => false, "message" => "An error occurred."], 500);
+            $this->jsonResponse(["state" => false, "message" => "An error occurred: " . $th->getMessage()], 500);
             error_log($th->getMessage());
         }
     }

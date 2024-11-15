@@ -173,6 +173,21 @@ class User extends Database
         }
     }
 
+    public function updateProfile(int $id, string $user, string $email): bool
+    {
+        try {
+            $con = $this->getConnection();
+            $stmt = $con->prepare("UPDATE users SET username = :user, email = :email WHERE id = :id;");
+            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+            $stmt->bindValue(':user', $user);
+            $stmt->bindValue(':email', $email);
+            return $stmt->execute();
+        } catch (\PDOException $ex) {
+            error_log("Error updating user state for ID " . $id . ": " . $ex->getMessage());
+            throw new Exception("Error updating profile " . $ex->getMessage());
+        }
+    }
+
     public function deleteById(int $id): bool
     {
         try {

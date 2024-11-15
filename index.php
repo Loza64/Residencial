@@ -39,6 +39,9 @@ switch ($_SERVER["REQUEST_METHOD"]) {
     case 'PATCH':
         handlePatchRequest($_GET["action"] ?? null, $controller);
         break;
+    case 'PUT':
+        handlePutRequest($_GET["action"] ?? null, $controller);
+        break;
     case 'DELETE':
         handleDeleteRequest($_GET["action"] ?? null, $controller);
         break;
@@ -112,6 +115,26 @@ function handlePatchRequest($action, Controller $controller)
     switch ($action) {
         case "updateuser":
             updateStateUser($_GET["id"] ?? 0, $_GET["state"], $controller);
+            break;
+        default:
+            http_response_code(404);
+            echo json_encode(["state" => false, "message" => "Action not found"]);
+            break;
+    }
+}
+
+function handlePutRequest($action, Controller $controller)
+{
+    if (empty($action)) {
+        http_response_code(400);
+        echo json_encode(["state" => false, "message" => "Action is required"]);
+        return;
+    }
+
+    switch ($action) {
+        case "updateprofile":
+            $post = getPost();
+            updateProfile($post, $controller);
             break;
         default:
             http_response_code(404);

@@ -52,6 +52,18 @@ function validateLogin($post)
     return $errors;
 }
 
+function validateProfile($put){
+    $errors = [];
+    if (!preg_match('/^[a-zA-ZÁ-ÿ0-9]{4,13}$/', $put["username"])) {
+        $errors["username"] = "Please input a valid username.";
+    }
+
+    if (!preg_match('/^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/', $put["email"])) {
+        $errors["email"] = "Please input a valid email.";
+    }
+    return $errors;
+}
+
 function validDate($data)
 {
     $date = DateTime::createFromFormat('Y-m-d', $data);

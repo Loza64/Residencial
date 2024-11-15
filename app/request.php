@@ -153,6 +153,23 @@ function updateStateUser(int $id, string $state, Controller $controller)
     }
 }
 
+function updateProfile($put, Controller $controller)
+{
+    $user = userSession();
+    if (!$user) {
+        sendJsonResponse(401, ["state" => false, "message" => "Your session has expired."]);
+        return;
+    }
+
+    $errors = validateProfile($put);
+    if (!empty($errors)) {
+        sendJsonResponse(400, ["state" => false, "message" => $errors]);
+        return;
+    }
+
+    $controller->updateProfile($user->getId(), $put["username"], $put["email"]);
+}
+
 function deleteUser(int $id, Controller $controller)
 {
     $user = userSession();
@@ -168,9 +185,9 @@ function deleteUser(int $id, Controller $controller)
     }
 
     if ($user->getRol() === "s_admin") {
-        if($user->getId() === $id){
+        if ($user->getId() === $id) {
             sendJsonResponse(403, ["state" => false, "message" => "You cannot deleted your self."]);
-        }else{
+        } else {
             $controller->deleteUser($id);
         }
     } else {
