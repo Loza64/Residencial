@@ -202,7 +202,7 @@ class Contact extends Database
         try {
             $con = $this->getConnection();
             $stmt = $con->prepare("SELECT 
-                c.id as idcontact , IFNULL(u.id, 0) AS iduser, IFNULL(u.username, 'deleted') AS user, u.state as usersate, c.name, c.birth,   
+                c.id as idcontact , u.id AS iduser, u.username AS user, u.state, c.name, c.birth,   
                 c.dui, c.email, c.phone, c.address, c.occupation, c.income,   
                 c.family_members, c.reason_interest, c.personal_reference, c.application_date   
                 FROM contact c   

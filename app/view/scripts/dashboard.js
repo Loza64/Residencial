@@ -66,14 +66,13 @@ async function fetchUsers(searchTerm = '') {
 let detailsWindow = null;
 
 function openCardDetails(contact) {
-    const { idcontact, user, iduser, name, dui, email, phone, address, occupation, income, family_members, reason_interest, personal_reference, application_date } = contact;
+    const { user, idcontact, iduser, name, dui, email, phone, address, occupation, income, family_members, reason_interest, personal_reference, application_date } = contact;
 
     const width = 400;
     const height = 650;
     const left = (window.innerWidth / 2) - (width / 2);
     const top = (window.innerHeight / 2) - (height / 2);
 
-    // Cerrar la ventana anterior 
     if (detailsWindow && !detailsWindow.closed) {
         detailsWindow.close();
     }
@@ -106,8 +105,8 @@ function openCardDetails(contact) {
                 <p><strong>Motivo de Interés:</strong> ${reason_interest}</p>  
                 <p><strong>Referencias:</strong> ${personal_reference}</p>  
                 <p><strong>Fecha de Aplicación:</strong> ${application_date}</p>  
-                <button class="accept-btn" onclick="window.opener.updateUserStatus(${iduser}, 'approved', ${contact.id})">ACEPTAR</button>  
-                <button class="deny-btn" onclick="window.opener.updateUserStatus(${iduser}, 'denied', ${contact.id})">DENEGAR</button>  
+                <button class="accept-btn" onclick="window.opener.updateUserStatus(${iduser}, 'approved', ${idcontact})">ACEPTAR</button>  
+                <button class="deny-btn" onclick="window.opener.updateUserStatus(${iduser}, 'denied', ${idcontact})">DENEGAR</button>  
             </body>  
         </html>  
     `);
@@ -122,20 +121,26 @@ async function updateUserStatus(userId, status, contactId) {
     const result = await response.json();
 
     if (response.status === 200) {
-        alert(result.message);
+        alert(result.message);   
+        
+        setTimeout(() => {  
+            const card = document.querySelector(`.card[data-id="${contactId}"]`);  
+            if (status === 'approved') {  
+                card.style.backgroundColor = 'green';  
+            } else if (status === 'denied') {  
+                card.style.backgroundColor = 'red';  
+            }  
+        }, 100);
 
-        const card = document.querySelector(`.card[data-id="${contactId}"]`);
-        if (status === 'approved') {
-            card.style.backgroundColor = '#4CAF50'; // Verde para aprobado
-        } else if (status === 'denied') {
-            card.style.backgroundColor = '#f44336'; // Rojo para denegado
+        if (detailsWindow && !detailsWindow.closed) {  
+            detailsWindow.close();  
         }
+        
     } else {
         alert(`Error ${response.status}: ${result.message}`);
     }
 }
 
-//Al presionar Enter, buscar formulario de contacto
 document.getElementById('contactSearch').addEventListener('keyup', (e) => {
     if (e.key === 'Enter') {
         const search = e.target.value;
@@ -156,16 +161,22 @@ async function fetchContacts(searchTerm = '') {
         contacts.forEach((item) => {
             const div = document.createElement('div');
             div.className = "card";
-            div.dataset.id = item.id;
-
+            div.dataset.id = item.idcontact;
             div.onclick = () => openCardDetails(item);
 
+            if (item.state === "approved") {
+                div.style.backgroundColor = 'green';
+            } else if (item.state === "denied") {
+                div.style.backgroundColor = 'red';
+            }
+
             div.innerHTML = `  
-                <p><strong>Nombre:</strong> ${item.name}</p>  
-                <p><strong>DUI:</strong> ${item.dui}</p>  
-                <p><strong>Teléfono:</strong> ${item.phone}</p>  
-                <p><strong>Dirección:</strong> ${item.address}</p>  
+            <p><strong>Nombre:</strong> ${item.name}</p>  
+            <p><strong>DUI:</strong> ${item.dui}</p>  
+            <p><strong>Teléfono:</strong> ${item.phone}</p>  
+            <p><strong>Dirección:</strong> ${item.address}</p>  
             `;
+
             card_container.appendChild(div);
         });
     } else if (response.status === 401) {
