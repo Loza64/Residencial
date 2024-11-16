@@ -58,7 +58,7 @@ header {
     transition: transform .5s;
 }
 
-.navigation a.contact::after {
+.navigation a.perfil::after {
     transform-origin: left;
     transform: scaleX(1);
 }
@@ -70,9 +70,9 @@ header {
 
 .wrapper {
     position: relative;
-    width: 90%;
-    max-width: 1150px;
-    height: 80vh;
+    width: 400px; 
+    height: auto; 
+    min-height: 400px; 
     background: transparent;
     border: 2px solid #2c3e50;
     border-radius: 20px;
@@ -88,12 +88,13 @@ header {
 
 .form-columns {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column; 
     gap: 20px;
+    width: 100%; 
 }
 
 .form-columns .input-box {
-    width: calc(33.33% - 13.33px);
+    width: 100%; 
 }
 
 .wrapper .form-box {
@@ -105,6 +106,7 @@ header {
     font-size: 2em;
     color: #2c3e50;
     text-align: center;
+    margin-bottom: 30px; 
 }
 
 .input-box {
@@ -112,7 +114,7 @@ header {
     width: 100%;
     height: 50px;
     border-bottom: 2px solid #2c3e50;
-    margin: 30px 0;
+    margin: 15px 0; 
 }
 
 .input-box label {
@@ -144,29 +146,6 @@ header {
     padding: 0 35px 0 5px;
 }
 
-.remember {
-    font-size: .9em;
-    color: #2c3e50;
-    font-weight: 500;
-    margin: -15px 0 15px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.remember label input {
-    accent-color: #2c3e50;
-    margin-right: 3px;
-}
-
-.remember a {
-    color: #2c3e50;
-    text-decoration: none;
-}
-
-.remember a:hover {
-    text-decoration: underline;
-}
-
 .btn {
     width: 100%;
     height: 45px;
@@ -178,39 +157,16 @@ header {
     font-size: 1em;
     color: #b2c8a4;
     font-weight: 500;
+    margin-top: 30px; 
 }
 
-
-.form-box.contact {
+.form-box.perfil {
     height: auto;
     overflow-y: auto;
 }
 
 
-.wrapper::-webkit-scrollbar {
-    width: 8px;
-}
-
-.wrapper::-webkit-scrollbar-track {
-    background: rgba(44, 62, 80, 0.1);
-    border-radius: 4px;
-}
-
-.wrapper::-webkit-scrollbar-thumb {
-    background: rgba(44, 62, 80, 0.5);
-    border-radius: 4px;
-}
-
-.wrapper::-webkit-scrollbar-thumb:hover {
-    background: rgba(44, 62, 80, 0.7);
-}
-
-
 @media screen and (max-width: 992px) {
-    .form-columns .input-box {
-        width: calc(50% - 10px);
-    }
-    
     header {
         padding: 20px 50px;
     }
@@ -225,14 +181,9 @@ header {
     }
 }
 
-
 @media screen and (max-width: 576px) {
-    .form-columns .input-box {
-        width: 100%;
-    }
-    
     .wrapper {
-        width: 95%;
+        width: 90%; 
         margin: 80px auto 10px auto;
     }
     
@@ -258,6 +209,6 @@ header {
     }
     
     .input-box {
-        margin: 20px 0;
+        margin: 15px 0;
     }
 }

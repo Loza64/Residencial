@@ -261,3 +261,91 @@ header{
 .login-register p a:hover{
     text-decoration: underline;
 }
+
+@media screen and (max-width: 768px) {
+
+    header{
+        position: fixed;
+        top: -10px;
+        left: 0;
+        width: 100%;
+        padding: 20px 10px;
+    }
+
+    .logo{
+        font-size: 20px;
+        color: #b2c8a4;
+        user-select: none;
+    }
+
+    .navigation .btnLogin-pop{
+        transform: scaleX(0);
+    }
+    
+    .wrapper {
+        width: 90%;
+        height: auto; 
+        border-radius: 10px; 
+        transform: translate(0, 0); 
+    }
+
+    .wrapper .icon-close{
+        transform: scaleX(0);
+    }
+
+    .wrapper.active .form-box.login{
+        transition: none;
+        transform: translateX(-700px);
+    }
+
+    .wrapper .form-box.register{
+        position: absolute;
+        transition: none;
+        transform: translateX(700px);
+    
+    }
+
+    .form-box {
+        padding: 20px; 
+    }
+
+    .input-box {
+        height: 40px; 
+    }
+
+    .btn {
+        height: 40px;
+        font-size: 0.9em; 
+    }
+}
+
+@media screen and (max-width: 576px) {
+
+    header{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 20px 10px;
+    
+    }
+
+    .wrapper {
+        width: 100%; 
+        margin: 20px auto; 
+        transform: translate(0, 0); 
+    }
+
+    .form-box h2 {
+        font-size: 1.5em;
+    }
+
+    .input-box {
+        height: 35px; 
+    }
+
+    .btn {
+        height: 35px;
+        font-size: 0.8em; 
+    }
+}

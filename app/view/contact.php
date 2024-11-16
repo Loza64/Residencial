@@ -31,6 +31,7 @@ if (!isset($_SESSION['user'])) {
             }
             ?>
             <a href="#" class="contact">Contacto</a>
+            <a href="#" class="perfil" onclick="window.location.href='editProfile.php'">Perfil</a>
             <a href="#" onclick="window.location.href='http://localhost/residencial/?action=logout'">Cerrar Sesión</a>
         </nav>
     </header>
