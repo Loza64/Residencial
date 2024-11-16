@@ -45,8 +45,6 @@ class Controller
             $response = $this->userDao->findByEmail($email);
             if ($response != null && $response->verifyPassword($pass)) {
 
-                session_name("UserSession");
-
                 session_set_cookie_params([
                     'secure' => true,     
                     'httponly' => true,  
