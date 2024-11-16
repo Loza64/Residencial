@@ -9,7 +9,7 @@ document.getElementById("perfil").addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const form = new FormData(e.target);
-    const response = await fetch('http://localhost/residencial/?action=updateprofile', {
+    const response = await fetch('https://localhost/residencial/?action=updateprofile', {
         headers: { 'Content-Type': 'application/json' },
         method: 'PUT',
         body: JSON.stringify({

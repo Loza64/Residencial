@@ -27,7 +27,7 @@ document.getElementById("contact").addEventListener("submit", async (e) => {
         application_date: formatDateToYYYYMMDD(formData.get('application_date'))
     };
 
-    const response = await fetch('http://localhost/residencial/?action=contact', {
+    const response = await fetch('https://localhost/residencial/?action=contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(contact)

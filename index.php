@@ -15,10 +15,10 @@ if (strcmp($_SERVER['REQUEST_URI'], '/residencial/') === 0) {
     exit();
 }
 
-header("Access-Control-Allow-Origin: {$config->getDomain()}");
-header("Content-Type: application/json");
-header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
-header("Access-Control-Allow-Credentials: true");
+header("Access-Control-Allow-Origin: https://{$config->getDomain()}");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");  
+header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");  
+header("Access-Control-Allow-Credentials: true"); 
 
 function getPost()
 {
