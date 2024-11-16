@@ -16,9 +16,21 @@ if (strcmp($_SERVER['REQUEST_URI'], '/residencial/') === 0) {
 }
 
 header("Access-Control-Allow-Origin: https://{$config->getDomain()}");
+
+header("X-Frame-Options: DENY");
+header("X-Content-Type-Options: nosniff");
+header("X-XSS-Protection: 1; mode=block");
+header("Access-Control-Allow-Credentials: true");
+header("Content-Security-Policy: frame-ancestors 'none';");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");  
+header("Strict-Transport-Security: max-age=31536000; includeSubDomains; preload");
 header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");  
-header("Access-Control-Allow-Credentials: true"); 
+header("Permissions-Policy: geolocation=(self), microphone=(), camera=(), fullscreen=(self)");
+
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {  
+    header("HTTP/1.1 204 No Content");  
+    exit();  
+} 
 
 function getPost()
 {

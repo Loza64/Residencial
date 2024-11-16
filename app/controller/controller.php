@@ -44,14 +44,26 @@ class Controller
 
             $response = $this->userDao->findByEmail($email);
             if ($response != null && $response->verifyPassword($pass)) {
+
+                session_set_cookie_params([
+                    'secure' => true,     
+                    'httponly' => true,  
+                    'samesite' => 'Strict',
+                ]);
+    
                 session_start();
+                
                 $_SESSION["user"] = [
+                    "create" => time(),
+                    "ip" => $_SERVER['REMOTE_ADDR'],
+                    "agent" => $_SERVER['HTTP_USER_AGENT'],
                     "id" => $response->getId(),
                     "username" => $response->getUsername(),
                     "email" => $response->getEmail(),
                     "rol" => $response->getRol(),
-                    "state" => $response->getState()
+                    "state" => $response->getState(),
                 ];
+                
                 $this->jsonResponse(["state" => true, "message" => "Login successful."], 200);
             } else {
                 $this->jsonResponse(["state" => false, "message" => "Email or password incorrect."], 401);

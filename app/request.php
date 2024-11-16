@@ -2,21 +2,43 @@
 require_once './app/middleware/validator.php';
 require_once './app/model/user.php';
 
-function userSession(): ?User
-{
-    session_start();
-    if (isset($_SESSION['user'])) {
-        $user = $_SESSION['user'];
-        return new User(
-            $user["id"],
-            $user["username"],
-            $user["email"],
-            null,
-            $user["rol"]
-        );
-    }
-    return null;
+function userSession(): ?User  
+{  
+    session_start();  
+
+    if (isset($_SESSION["user"])) {  
+        $user = $_SESSION["user"];  
+
+        if ($user["ip"] != $_SERVER["REMOTE_ADDR"]) {  
+            session_unset();  
+            session_destroy();  
+            error_log("Hacking attempt detected: IP mismatch");  
+            return null;  
+        }  
+
+        if ($user["agent"] != $_SERVER["HTTP_USER_AGENT"]) {  
+            error_log("Hacking attempt detected: User agent mismatch");  
+            return null;  
+        }  
+
+        if (time() - $user["create"] > 1800) {
+            session_unset();  
+            session_destroy();  
+            return null;  
+        }  
+
+        return new User(  
+            $user["id"],  
+            $user["username"],  
+            $user["email"],  
+            null,  
+            $user["rol"]  
+        );  
+    } else {  
+        return null; 
+    }  
 }
+
 
 function sendJsonResponse(int $status, $data)
 {
