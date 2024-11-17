@@ -7,6 +7,13 @@ if (!isset($_SESSION['user'])) {
     header('Location: dashboard.php');
   }
 }
+#To use .env variables
+require_once __DIR__ . '/vendor/autoload.php';
+
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 ?>
 
 <!DOCTYPE html>
@@ -32,7 +39,7 @@ if (!isset($_SESSION['user'])) {
             ?>
             <a href="#" class="contact">Contacto</a>
             <a href="#" class="perfil" onclick="window.location.href='editProfile.php'">Perfil</a>
-            <a href="#" onclick="window.location.href='https://localhost/residencial/?action=logout'">Cerrar Sesión</a>
+            <a href="#" onclick="window.location.href='<?php echo $_ENV['DOMAIN']; ?>/residencial/?action=logout'">Cerrar Sesión</a>
         </nav>
     </header>
 
