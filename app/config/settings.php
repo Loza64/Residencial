@@ -14,11 +14,9 @@ class Settings
     public function __construct()
     {
         Dotenv::createImmutable('./')->load();
-        //APP
+
         $this->domain = $_ENV["DOMAIN"] ?? "localhost";
         $this->mode = $_ENV["MODE"] ?? null;
-
-        //DATABASE
         $this->user = $_ENV["USER"] ?? null;
         $this->pass = $_ENV["PASS"] ?? null;
         $this->dsn = "mysql:host=" . ($_ENV['HOST'] ?? 'localhost') . ";port=3306;dbname=residencial;charset=utf8mb4";;
