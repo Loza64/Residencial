@@ -9,9 +9,7 @@ if (!isset($_SESSION['user'])) {
 }
 #To use .env variables
 require_once __DIR__ . '/vendor/autoload.php';
-
 use Dotenv\Dotenv;
-
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 ?>
@@ -37,7 +35,7 @@ $dotenv->load();
             }
             ?>
             <a href="#" onclick="showSection('request-section')" class="active">Solicitudes</a>
-            <a href="#" onclick="window.location.href='<?php echo $_ENV['DOMAIN']; ?>/residencial/?action=logout'">Cerrar Sesión</a>
+            <a href="#" onclick="window.location.href='<?php echo $_ENV['DOMAIN']; ?>/residencial/?action=logout'">Cerrar Sesión</a><?php#EDITED?>
         </nav>
     </header>
 

@@ -1,27 +1,3 @@
-let DOMAIN;
-
-async function loadDomain() {
-    try {
-        const response = await fetch('../app/config/env.php');
-        const config = await response.json();
-        DOMAIN = config.domain;
-
-        if (!DOMAIN) {
-            console.error('No se pudo cargar la variable DOMAIN desde el servidor.');
-        }
-    } catch (error) {
-        console.error('Error al obtener la variable DOMAIN:', error);
-    }
-}
-
-window.onload = async function () {
-    await loadDomain();
-    if (DOMAIN) {
-        fetchUsers();
-        fetchContacts();
-    }
-};
-
 const wrapper = document.querySelector('.wrapper');
 const loginLink = document.querySelector('.login-link');
 const registerLink = document.querySelector('.register-link');
@@ -49,7 +25,7 @@ document.getElementById("login").addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const form = new FormData(e.target);
-    const response = await fetch('${DOMAIN}/residencial/?action=login', {
+    const response = await fetch('https://localhost/residencial/?action=login', {
         headers: { 'Content-Type': 'application/json' },
         method: 'POST',
         body: JSON.stringify({
@@ -60,7 +36,7 @@ document.getElementById("login").addEventListener('submit', async (e) => {
     const result = await response.json();
     if (response.status === 200) {
         alert(result.message);
-        window.location.href = '${DOMAIN}/residencial/?action=redirect';
+        window.location.href = 'https://localhost/residencial/?action=redirect';
     } else if (response.status === 400) {
         alert(`Error ${response.status}: ${JSON.stringify(result.message)}`)
     }
@@ -73,7 +49,7 @@ document.getElementById("signup").addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const form = new FormData(e.target);
-    const response = await fetch('${DOMAIN}/residencial/?action=signup', {
+    const response = await fetch('https://localhost/residencial/?action=signup', {
         headers: { 'Content-Type': 'application/json' },
         method: 'POST',
         body: JSON.stringify({
