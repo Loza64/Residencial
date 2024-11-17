@@ -5,13 +5,11 @@ use Dotenv\Dotenv;
 
 class Settings
 {
+    private $domain;
+    private $mode;
     private $dsn;
     private $user;
     private $pass;
-    private $mode;
-    private $domain;
-    private $dbhost;
-    private $dbport;
 
     public function __construct()
     {
