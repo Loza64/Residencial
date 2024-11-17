@@ -14,7 +14,6 @@ class Settings
     public function __construct()
     {
         Dotenv::createImmutable('./')->load();
-
         $this->domain = $_ENV["DOMAIN"] ?? "localhost";
         $this->mode = $_ENV["MODE"] ?? null;
         $this->user = $_ENV["USER"] ?? null;
