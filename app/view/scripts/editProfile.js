@@ -1,3 +1,5 @@
+const domain = "192.168.1.4";
+
 function enableEditing() {
     const inputs = document.querySelectorAll('form#perfil input');
     inputs.forEach(input => input.removeAttribute('readonly'));
@@ -5,18 +7,22 @@ function enableEditing() {
     document.querySelector('#edit-buttons button[type="submit"]').style.display = 'inline-block';
 }
 
+document.getElementById('logout').addEventListener('click', () => {
+    window.location.href = `https://${domain}/residencial/?action=logout`
+})
+
 document.getElementById("perfil").addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const form = new FormData(e.target);
-    const response = await fetch('https://localhost/residencial/?action=updateprofile', {
+    const response = await fetch(`https://${domain}/residencial/?action=updateprofile`, {
         headers: { 'Content-Type': 'application/json' },
         method: 'PUT',
         body: JSON.stringify({
             username: form.get("username"),
             email: form.get("email")
         })
-});
+    });
     const result = await response.json();
     if (response.status === 200) {
         alert(result.message);

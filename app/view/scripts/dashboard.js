@@ -1,3 +1,5 @@
+const domain = "192.168.1.4";
+
 function showSection(sectionId) {
 
     document.getElementById('user-section').style.display = sectionId === 'user-section' ? 'block' : 'none';
@@ -8,6 +10,9 @@ function showSection(sectionId) {
     document.querySelector('.navigation a[onclick*="request-section"]').classList.toggle('active', sectionId === 'request-section');
 }
 
+document.getElementById('logout').addEventListener('click', () => {
+    window.location.href = `https://${domain}/residencial/?action=logout`
+})
 
 document.getElementById('userSearch').addEventListener('keyup', (e) => {
     if (e.key === 'Enter') {
@@ -18,7 +23,7 @@ document.getElementById('userSearch').addEventListener('keyup', (e) => {
 
 async function deleteUser(userId) {
     if (confirm("¿Estás seguro de que deseas eliminar este usuario?")) {
-        const response = await fetch(`https://localhost/residencial/?action=deleteduser&id=${userId}`, { method: 'DELETE' })
+        const response = await fetch(`https://${domain}/residencial/?action=deleteduser&id=${userId}`, { method: 'DELETE' })
         const result = await response.json();
         if (response.status === 200) {
             alert(result.message);
@@ -30,7 +35,7 @@ async function deleteUser(userId) {
 }
 
 async function fetchUsers(searchTerm = '') {
-    const response = await fetch(`https://localhost/residencial/?action=users&search=${searchTerm}`);
+    const response = await fetch(`https://${domain}/residencial/?action=users&search=${searchTerm}`);
     const result = await response.json();
     if (response.status === 200) {
         const users = result.users;
@@ -115,7 +120,7 @@ function openCardDetails(contact) {
 
 
 async function updateUserStatus(userId, status, contactId) {
-    const response = await fetch(`https://localhost/residencial/?action=updateuser&id=${userId}&state=${status}`, {
+    const response = await fetch(`https://${domain}/residencial/?action=updateuser&id=${userId}&state=${status}`, {
         method: 'PATCH'
     });
     const result = await response.json();
@@ -152,7 +157,7 @@ async function fetchContacts(searchTerm = '') {
     const card_container = document.querySelector(".card-container");
     card_container.innerHTML = '';
 
-    const response = await fetch(`https://localhost/residencial/?action=contacts&search=${searchTerm}`);
+    const response = await fetch(`https://${domain}/residencial/?action=contacts&search=${searchTerm}`);
     const result = await response.json();
 
     if (response.status === 200) {

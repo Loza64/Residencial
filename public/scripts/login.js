@@ -1,3 +1,5 @@
+const domain = "192.168.1.4";
+
 const wrapper = document.querySelector('.wrapper');
 const loginLink = document.querySelector('.login-link');
 const registerLink = document.querySelector('.register-link');
@@ -25,7 +27,7 @@ document.getElementById("login").addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const form = new FormData(e.target);
-    const response = await fetch('https://192.168.231.129/residencial/?action=login', {
+    const response = await fetch(`https://${domain}/residencial/?action=login`, {
         headers: { 'Content-Type': 'application/json' },
         method: 'POST',
         body: JSON.stringify({
@@ -36,7 +38,7 @@ document.getElementById("login").addEventListener('submit', async (e) => {
     const result = await response.json();
     if (response.status === 200) {
         alert(result.message);
-        window.location.href = 'https://192.168.231.129/residencial/?action=redirect';
+        window.location.href = `https://${domain}/residencial/?action=redirect`;
     } else if (response.status === 400) {
         alert(`Error ${response.status}: ${JSON.stringify(result.message)}`)
     }
@@ -49,7 +51,7 @@ document.getElementById("signup").addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const form = new FormData(e.target);
-    const response = await fetch('https://192.168.231.129/residencial/?action=signup', {
+    const response = await fetch(`https://${domain}/residencial/?action=signup`, {
         headers: { 'Content-Type': 'application/json' },
         method: 'POST',
         body: JSON.stringify({
