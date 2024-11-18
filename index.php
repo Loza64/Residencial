@@ -3,8 +3,7 @@ require_once 'app/controller/controller.php';
 require_once 'app/config/settings.php';
 require_once 'app/request.php';
 
-$domain = gethostname();
-
+$config = new Settings();
 if ($config->getMode() == "DEVELOPMENT") {
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
@@ -16,7 +15,7 @@ if (strcmp($_SERVER['REQUEST_URI'], '/residencial/') === 0) {
     exit();
 }
 
-header("Access-Control-Allow-Origin: https://$domain");
+header("Access-Control-Allow-Origin: https://{$config->getDomain()}");
 
 header("X-Frame-Options: DENY");
 header("X-Content-Type-Options: nosniff");
