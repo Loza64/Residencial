@@ -139,7 +139,7 @@ function getUserList(?string $search, Controller $controller)
         return;
     }
 
-    if ($user->getRol() === "s_admin") {
+    if ($user->getRol() === "s_admin" || $user->getRol() === "admin") {
         $controller->getUserList($search);
     } else {
         sendJsonResponse(403, ["state" => false, "message" => "You are not granted permission for this request."]);
