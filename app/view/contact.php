@@ -32,7 +32,7 @@ if (!isset($_SESSION['user'])) {
             ?>
             <a href="#" class="contact">Contacto</a>
             <a href="#" class="perfil" onclick="window.location.href='editProfile.php'">Perfil</a>
-            <a id="logout">Cerrar Sesión</a>
+            <a href="#" id="logout">Cerrar Sesión</a>
         </nav>
     </header>
 

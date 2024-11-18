@@ -1,4 +1,4 @@
-const domain = "192.168.1.4";
+const domain = window.location.hostname;
 
 const wrapper = document.querySelector('.wrapper');
 const loginLink = document.querySelector('.login-link');

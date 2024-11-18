@@ -30,7 +30,7 @@ if (!isset($_SESSION['user'])) {
             <?php } ?>
             <a href="#" onclick="window.location.href='contact.php'">Contacto</a>
             <a href="#" class="perfil">Perfil</a>
-            <a id="logout" >Cerrar Sesión</a>
+            <a href="#" id="logout" >Cerrar Sesión</a>
         </nav>
     </header>
 

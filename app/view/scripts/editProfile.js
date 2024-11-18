@@ -1,4 +1,4 @@
-const domain = "192.168.1.4";
+const domain = window.location.hostname;
 
 function enableEditing() {
     const inputs = document.querySelectorAll('form#perfil input');

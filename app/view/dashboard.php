@@ -30,7 +30,7 @@ if (!isset($_SESSION['user'])) {
             }
             ?>
             <a href="#" onclick="showSection('request-section')" class="active">Solicitudes</a>
-            <a id="logout">Cerrar Sesión</a>
+            <a href="#" id="logout">Cerrar Sesión</a>
         </nav>
     </header>
 
