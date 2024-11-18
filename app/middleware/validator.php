@@ -29,7 +29,7 @@ function validateSignUp($post)
         $errors["email"] = "Please enter a valid email address.";
     }
 
-    if (!preg_match('/^[a-zA-ZÁ-ÿ\s(),.-]{4,240}$/', $post["pass"])) {
+    if (!preg_match('/^[a-zA-ZÁ-ÿ0-9\s(),.-]{4,240}$/', $post["pass"])) {
         $errors["pass"] = "Password must be between 4 and 240 characters long and can include letters, spaces, and some symbols.";
     }
 
