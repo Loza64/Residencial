@@ -111,16 +111,16 @@ function logout()
 
 function redirect()
 {
-    $domain = gethostname();
+    $config = new Settings();;
     $user = userSession();
     if ($user) {
         if ($user->getRol() === "s_admin" || $user->getRol() === "admin") {
-            header("Location: https://$domain/residencial/app/view/dashboard.php");
+            header("Location: https://{$config->getDomain()}/residencial/app/view/dashboard.php");
         } else {
-            header("Location: https://$domain/residencial/app/view/inicio.php");
+            header("Location: https://{$config->getDomain()}/residencial/app/view/inicio.php");
         }
     } else {
-        header("Location: https://$domain/residencial/public/login.php");
+        header("Location: https://{$config->getDomain()}/residencial/public/login.php");
     }
     exit;
 }
