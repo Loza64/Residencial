@@ -43,7 +43,7 @@ if (!isset($_SESSION['user'])) {
                     type="text"
                     id="contactSearch"
                     placeholder="Buscar por usuario..."
-                    nkeyup="filterContacts()">
+                    onkeyup="filterContacts()">
             </div>
 
             <div class="card-container">
