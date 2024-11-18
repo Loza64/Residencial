@@ -111,7 +111,7 @@ function logout()
 
 function redirect()
 {
-    $domain = (new Settings())->getDomain();
+    $domain = gethostname();
     $user = userSession();
     if ($user) {
         if ($user->getRol() === "s_admin" || $user->getRol() === "admin") {
