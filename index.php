@@ -10,10 +10,6 @@ if ($config->getMode() == "DEVELOPMENT") {
     error_reporting(E_ALL);
 }
 
-if (strcmp($_SERVER['REQUEST_URI'], '') === 0) {
-    header("Location: /public/login.php");
-    exit();
-}
 if (strcmp($_SERVER['REQUEST_URI'], '/') === 0) {
     header("Location: /public/login.php");
     exit();
