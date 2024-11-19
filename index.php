@@ -19,17 +19,17 @@ if (strcmp($_SERVER['REQUEST_URI'], '/') === 0) {
     exit();
 }
 // Lista de rutas válidas
-/$validRoutes = [
-   '/app/view/inicio.php',
-  '/app/view/dashboard',
-   '/app/view/contact',
-  '/app/view/editProfile'
-];
+// $validRoutes = [
+//   '/app/view/inicio.php',
+//  '/app/view/dashboard',
+//   '/app/view/contact',
+//    '/app/view/editProfile'
+//];
 // Redirigir a una ruta por defecto si no es válida
-if (!in_array($_SERVER['REQUEST_URI'], $validRoutes)) {
-    header('Location: /public/login.php');
-    exit;
-}
+//if (!in_array($_SERVER['REQUEST_URI'], $validRoutes)) {
+//    header("Location: /public/login.php");
+//    exit;
+//}
 
 header("Access-Control-Allow-Origin: https://{$config->getDomain()}");
 
