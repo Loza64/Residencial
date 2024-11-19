@@ -96,8 +96,7 @@ function saveContact($post, Controller $controller)
         (float)$post["income"],
         (int)$post["family_members"],
         $post["reason_interest"],
-        $post["personal_reference"],
-        new DateTime($post["application_date"])
+        $post["personal_reference"]
     );
     $controller->newContact($contact);
 }

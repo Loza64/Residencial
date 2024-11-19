@@ -88,10 +88,6 @@ if (!isset($_SESSION['user'])) {
                         <input type="text" name="personal_reference" required>
                         <label>Referencias Personales (Nombre, Teléfono, Relación)</label>
                     </div>
-                    <div class="input-box">
-                        <input type="date" name="application_date" required>
-                        <label>Fecha de Aplicación</label>
-                    </div>
                 </div>
                 <div class="remember">
                     <label><input type="checkbox" required> Autorización para Comprobación de Datos</label>

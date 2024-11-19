@@ -132,19 +132,5 @@ function validateContact($post)
         $errors["personal_reference"] = "The personal reference must be between 5 and 200 characters long and contain only valid characters.";
     }
 
-    if (!validDate($post["application_date"])) {
-        $errors["application_date"] = "Please enter a valid application date in the format 'Y-m-d'.";
-    } else {
-        $applicationDate = DateTime::createFromFormat('Y-m-d', $post["application_date"]);
-        $now = new DateTime();
-
-        $applicationDate->setTime(0, 0, 0);
-        $now->setTime(0, 0, 0);
-        
-        if ($applicationDate != $now) {
-            $errors["application_date"] = "The application date must be today.";
-        }
-    }
-
-    return $errors;
+   return $errors;
 }

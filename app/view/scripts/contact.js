@@ -29,8 +29,7 @@ document.getElementById("contact").addEventListener("submit", async (e) => {
         income: parseFloat(formData.get('income')),
         family_members: parseInt(formData.get('family_members')),
         reason_interest: formData.get('reason_interest'),
-        personal_reference: formData.get('personal_reference'),
-        application_date: formatDateToYYYYMMDD(formData.get('application_date'))
+        personal_reference: formData.get('personal_reference')
     };
 
     const response = await fetch(`https://${domain}/?action=contact`, {

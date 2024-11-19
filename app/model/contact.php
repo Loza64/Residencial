@@ -151,7 +151,7 @@ class Contact extends Database
                 $stmt->bindValue(":family_members", $contact->getFamilyMembers());
                 $stmt->bindValue(":reason_interest", $contact->getReasonInterest());
                 $stmt->bindValue(":personal_reference", $contact->getPersonalReference());
-                $stmt->bindValue(":application_date", $contact->getApplicationDate()->format('Y-m-d'));
+                $stmt->bindValue(":application_date", (new DateTime())->format('Y-m-d'));
                 $stmt->execute();
                 return true;
             } else {
