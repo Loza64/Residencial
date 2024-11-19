@@ -40,7 +40,6 @@ function userSession(): ?User
     }
 }
 
-
 function sendJsonResponse(int $status, $data)
 {
     http_response_code($status);
@@ -105,7 +104,7 @@ function logout()
 {
     session_start();
     session_destroy();
-    header('Location: /residencial/public/login.php');
+    header('Location: /public/login.php');
     exit;
 }
 
@@ -115,12 +114,12 @@ function redirect()
     $user = userSession();
     if ($user) {
         if ($user->getRol() === "s_admin" || $user->getRol() === "admin") {
-            header("Location: https://{$config->getDomain()}/residencial/app/view/dashboard.php");
+            header("Location: https://{$config->getDomain()}/app/view/dashboard.php");
         } else {
-            header("Location: https://{$config->getDomain()}/residencial/app/view/inicio.php");
+            header("Location: https://{$config->getDomain()}/app/view/inicio.php");
         }
     } else {
-        header("Location: https://{$config->getDomain()}/residencial/public/login.php");
+        header("Location: https://{$config->getDomain()}/public/login.php");
     }
     exit;
 }

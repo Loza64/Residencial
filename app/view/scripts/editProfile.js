@@ -8,14 +8,14 @@ function enableEditing() {
 }
 
 document.getElementById('logout').addEventListener('click', () => {
-    window.location.href = `https://${domain}/residencial/?action=logout`
+    window.location.href = `https://${domain}/?action=logout`
 })
 
 document.getElementById("perfil").addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const form = new FormData(e.target);
-    const response = await fetch(`https://${domain}/residencial/?action=updateprofile`, {
+    const response = await fetch(`https://${domain}/?action=updateprofile`, {
         headers: { 'Content-Type': 'application/json' },
         method: 'PUT',
         body: JSON.stringify({
