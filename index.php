@@ -10,9 +10,26 @@ if ($config->getMode() == "DEVELOPMENT") {
     error_reporting(E_ALL);
 }
 
+if (strcmp($_SERVER['REQUEST_URI'], '') === 0) {
+    header("Location: /public/login.php");
+    exit();
+}
 if (strcmp($_SERVER['REQUEST_URI'], '/') === 0) {
     header("Location: /public/login.php");
     exit();
+}
+// Lista de rutas válidas
+$validRoutes = [
+    '/app/view/inicio.php',
+    '/app/view/dashboard',
+    '/app/view/contact',
+    '/app/view/editProfile',
+    '/public/login.php'
+];
+// Redirigir a una ruta por defecto si no es válida
+if (!in_array($_SERVER['REQUEST_URI'], $validRoutes)) {
+    header('Location: /public/login.php');
+    exit;
 }
 
 header("Access-Control-Allow-Origin: https://{$config->getDomain()}");
