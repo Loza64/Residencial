@@ -1,7 +1,7 @@
 const domain = window.location.hostname;
 
 document.getElementById('logout').addEventListener('click', () => {
-    window.location.href = `https://${domain}/residencial/?action=logout`
+    window.location.href = `https://${domain}/?action=logout`
 })
 
 document.getElementById("contact").addEventListener("submit", async (e) => {
@@ -33,7 +33,7 @@ document.getElementById("contact").addEventListener("submit", async (e) => {
         application_date: formatDateToYYYYMMDD(formData.get('application_date'))
     };
 
-    const response = await fetch(`https://${domain}/residencial/?action=contact`, {
+    const response = await fetch(`https://${domain}/?action=contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(contact)
