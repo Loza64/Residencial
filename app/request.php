@@ -18,6 +18,8 @@ function userSession(): ?User
         }
 
         if ($user["agent"] != $_SERVER["HTTP_USER_AGENT"]) {
+            session_unset();
+            session_destroy();
             error_log("Hacking attempt detected: User agent mismatch");
             return null;
         }
