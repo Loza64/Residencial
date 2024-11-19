@@ -49,7 +49,7 @@ if (!isset($_SESSION['user'])) {
                         <label>Nombre Completo</label>
                     </div>
                     <div class="input-box">
-                        <input type="date" name="birth" required>
+                        <input type="date" name="birth" pattern="\d{2}-\d{2}-\d{4}" required>
                         <label>Fecha de Nacimiento</label>
                     </div>
                     <div class="input-box">
@@ -89,7 +89,7 @@ if (!isset($_SESSION['user'])) {
                         <label>Referencias Personales (Nombre, Teléfono, Relación)</label>
                     </div>
                     <div class="input-box">
-                        <input type="date" name="application_date" required>
+                        <input type="date" name="application_date" pattern="\d{2}-\d{2}-\d{4}" required>
                         <label>Fecha de Aplicación</label>
                     </div>
                 </div>
