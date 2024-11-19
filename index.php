@@ -18,22 +18,6 @@ if (strcmp($_SERVER['REQUEST_URI'], '/') === 0) {
     header("Location: /public/login.php");
     exit();
 }
-#Router
-$validRoutes = [
-    '/app/view/inicio.php',
-    '/app/view/dashboard.php',
-    '/app/view/contact.php',
-    '/app/view/editProfile.php'
-];
-
-#Obtener la URI solicitada sin parámetros de consulta
-$requestUri = strtok($_SERVER['REQUEST_URI'], '?');
-
-#Validar si la ruta está en la lista de rutas válidas
-if (!in_array($requestUri, $validRoutes)) {
-    header("Location: /public/login.php");
-    exit();
-}
 
 header("Access-Control-Allow-Origin: https://{$config->getDomain()}");
 
