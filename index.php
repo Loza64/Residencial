@@ -17,6 +17,7 @@ if (strcmp($_SERVER['REQUEST_URI'], '') === 0 || strcmp($_SERVER['REQUEST_URI'],
 
 header("Access-Control-Allow-Origin: https://{$config->getDomain()}");
 
+header_remove('Server');
 header("X-Frame-Options: DENY");
 header("X-Content-Type-Options: nosniff");
 header("X-XSS-Protection: 1; mode=block");

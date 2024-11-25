@@ -1,0 +1,3 @@
+# Ocultar el nombre del servidor  
+ServerTokens Prod  
+ServerSignature Off 
