@@ -4,7 +4,7 @@ require_once 'app/config/settings.php';
 require_once 'app/request.php';
 
 $config = new Settings();
-if ($config->getMode() == "DEVELOPMENT") {
+if ($config->getMode() == "development") {
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);

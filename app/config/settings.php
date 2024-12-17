@@ -13,12 +13,16 @@ class Settings
 
     public function __construct()
     {
-        Dotenv::createImmutable('./')->load();
+        Dotenv::createImmutable('.')->load();
         $this->domain = $_ENV["DOMAIN"] ?? "localhost";
-        $this->mode = $_ENV["MODE"] ?? null;
+        $this->mode = $_ENV["MODE"] ?? 'development';
         $this->user = $_ENV["USER"] ?? null;
         $this->pass = $_ENV["PASS"] ?? null;
         $this->dsn = $_ENV["DSN"] ?? null;
+
+        if (empty($this->user) || empty($this->pass) || empty($this->dsn)) {
+            throw new Exception("Config incomplete");
+        }
     }
 
     public function getDsn()
