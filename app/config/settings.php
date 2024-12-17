@@ -18,7 +18,7 @@ class Settings
         $this->mode = $_ENV["MODE"] ?? null;
         $this->user = $_ENV["USER"] ?? null;
         $this->pass = $_ENV["PASS"] ?? null;
-        $this->dsn = "mysql:host=" . ($_ENV['HOST'] ?? 'localhost') . ";port=3306;dbname=residencial;charset=utf8mb4";;
+        $this->dsn = $_ENV["DSN"] ?? null;
     }
 
     public function getDsn()
