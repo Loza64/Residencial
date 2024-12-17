@@ -10,7 +10,11 @@ if ($config->getMode() == "DEVELOPMENT") {
     error_reporting(E_ALL);
 }
 
-if (strcmp($_SERVER['REQUEST_URI'], '') === 0 || strcmp($_SERVER['REQUEST_URI'], '/') === 0 || strcmp($_SERVER['REQUEST_URI'], '/index.php') === 0) {
+if (
+    strcmp($_SERVER['REQUEST_URI'], '') === 0 ||
+    strcmp($_SERVER['REQUEST_URI'], '/') === 0 ||
+    strcmp($_SERVER['REQUEST_URI'], '/index.php') === 0
+) {
     header("Location: /public/login.php");
     exit();
 }
@@ -23,15 +27,15 @@ header("X-Content-Type-Options: nosniff");
 header("X-XSS-Protection: 1; mode=block");
 header("Access-Control-Allow-Credentials: true");
 header("Content-Security-Policy: frame-ancestors 'none';");
-header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");  
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
 header("Strict-Transport-Security: max-age=31536000; includeSubDomains; preload");
-header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");  
+header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
 header("Permissions-Policy: geolocation=(self), microphone=(), camera=(), fullscreen=(self)");
 
-if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {  
-    header("HTTP/1.1 204 No Content");  
-    exit();  
-} 
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    header("HTTP/1.1 204 No Content");
+    exit();
+}
 
 function getPost()
 {
