@@ -24,6 +24,6 @@ Asegúrate de configurar las siguientes variables de entorno en tu archivo `.env
   ```env  
   PASS=password
 
-- `DSN`: Cadena de conneccion a la base de datos Ejemplo:  
+- `DSN`: Cadena de conección a la base de datos Ejemplo:  
   ```env  
   DSN="mysql:host=localhost;dbname=residencial;charset=utf8mb4"
