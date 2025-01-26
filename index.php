@@ -19,7 +19,7 @@ if (
     exit();
 }
 
-header("Access-Control-Allow-Origin: https://{$config->getDomain()}");
+header("Access-Control-Allow-Origin: https://{$config->getDomain()}:8443");
 
 header_remove('Server');
 header("X-Frame-Options: DENY");

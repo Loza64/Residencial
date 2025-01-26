@@ -1,4 +1,4 @@
-const domain = window.location.hostname;
+const domain = `${window.location.hostname}:${window.location.port}`;
 
 const wrapper = document.querySelector('.wrapper');
 const loginLink = document.querySelector('.login-link');

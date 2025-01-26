@@ -1,4 +1,4 @@
-const domain = window.location.hostname;
+const domain = `${window.location.hostname}:${window.location.port}`;
 
 function showSection(sectionId) {
 

@@ -1,5 +1,4 @@
-const domain = window.location.hostname;
-
+const domain = `${window.location.hostname}:${window.location.port}`;
 function enableEditing() {
     const inputs = document.querySelectorAll('form#perfil input');
     inputs.forEach(input => input.removeAttribute('readonly'));
